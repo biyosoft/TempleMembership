@@ -28,8 +28,6 @@ class CreateMembershipsTable extends Migration
             $table->string('gvBrowseUDF_TARIKHMEMOHON');
             $table->string('gvBrowseUDF_PEKERJAAN')->nullable();
             $table->string('gvBrowseUDF_JANTINA')->nullable();
-            $table->unsignedBigInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items');
             $table->timestamps();
         });
     }
