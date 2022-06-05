@@ -3,7 +3,7 @@
 <div class="mt-4">
     <div class="card">
         <div class="card-header">
-            <h4>Payments</h4>
+            <h4>{{$payments[0] ? $payments[0]->member->gvBrowseCompanyName : ""}}'s Payments</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -18,9 +18,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($payments as $payment)
+                        @foreach($payments as $index => $payment)
                         <tr>
-                            <td>{{ $payment->id }}</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>
                                 <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }}</div>
                                 @foreach($payment->paymentDetails as $paymentDetails)

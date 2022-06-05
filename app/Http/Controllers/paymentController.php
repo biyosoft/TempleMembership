@@ -19,7 +19,9 @@ class paymentController extends Controller
      */
     public function index()
     {
-        return view("payments.index");
+        // get all payments
+        $payments = payment::all();
+        return view("payments.index", compact("payments"));
     }
 
     /**
@@ -30,9 +32,12 @@ class paymentController extends Controller
     public function create()
     {
         //
+        $member_id = request()->input("member_id");
+        $member_id = $member_id ? $member_id : "";
         $items = item::all();
         $memberships = membership::all();
-        return view('payments.create', compact('items', 'memberships'));
+        
+        return view('payments.create', compact('items', 'memberships', 'member_id'));
     }
 
     /**
@@ -59,6 +64,7 @@ class paymentController extends Controller
             'payment_date' => $timeNow->toDateString(),
             'member_id' => $input['member_id'],
             'amount' => $input['amount'],
+            'admin_id' => auth()->user()->id,
         ]);
 
         // From items selected by user find the latest year also save payment details
@@ -94,9 +100,10 @@ class paymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(payment $payment)
     {
         //
+        return view('payments.show', compact('payment'));
     }
 
     /**
@@ -131,5 +138,12 @@ class paymentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function member_payments($id)
+    {
+        // get all payments for a member
+        $payments = payment::where('member_id', $id)->get();
+        return view("payments.member_payments", compact("payments"));
     }
 }

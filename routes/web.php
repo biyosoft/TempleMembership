@@ -23,4 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::resource("items", itemController::class, ['only' => ['index', 'create', 'store']]);
     Route::resource('members', membersController::class);
     Route::resource("payments", paymentController::class);
+    Route::group(['prefix' => 'payments'], function () {
+        Route::get("member_payments/{id}", [paymentController::class, 'member_payments'])->name('payments.member_payments');
+    });
 });

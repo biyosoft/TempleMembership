@@ -19,4 +19,9 @@ class PaymentDetail extends Model
     {
         return $this->belongsTo(payment::class);
     }
+
+    public function parentItem()
+    {
+        return $this->belongsTo(item::class, "item_code_id");
+    }
 }

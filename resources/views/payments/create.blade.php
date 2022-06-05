@@ -15,7 +15,7 @@
                             <select class="form-control addro" name="member_id" id="customer-select" required>
                                 <option value=""></option>
                                 @foreach($memberships as $member)
-                                <option value="{{$member->id}}">{{$member->gvBrowseCompanyName}} - {{$member->gvBrowseAttention}} </option>
+                                <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} - {{$member->gvBrowseAttention}} </option>
                                 @endforeach
                             </select>
                         </div>

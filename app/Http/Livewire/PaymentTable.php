@@ -85,6 +85,7 @@ final class PaymentTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('member_name')
+            ->addColumn('amount')
             ->addColumn('payment_date_formatted', function (payment $model) {
                 return Carbon::parse($model->payment_date)->format('d/m/Y');
             })

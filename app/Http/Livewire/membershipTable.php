@@ -265,14 +265,28 @@ final class membershipTable extends PowerGridComponent
         return [
             Button::add('edit')
                 ->caption('Edit')
+                ->target("")
                 ->class('btn btn-info cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
                 ->route('members.edit', ['member' => 'id']),
 
             Button::add('destroy')
                 ->caption('Delete')
+                ->target("")
                 ->class('btn btn-danger cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                 ->route('members.destroy', ['member' => 'id'])
-                ->method('delete')
+                ->method('delete'),
+            Button::add('create')
+                ->caption("Add Payment")
+                ->target("")
+                ->class("btn btn-success cursor-pointer text-white px-3 py-2 m-1 rounded text-sm")
+                ->route("payments.create", ["member_id" => "id"])
+                ->method("get"),
+            Button::add("view")
+                ->caption("View Payments")
+                ->target("")
+                ->class("btn btn-primary cursor-pointer text-white px-3 py-2 m-1 rounded text-sm")
+                ->route("payments.member_payments", ["id" => "id"])
+                ->method("get"),
         ];
     }
 
