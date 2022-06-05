@@ -24,10 +24,12 @@ class membership extends Model
         'gvBrowseUDF_JANTINA',
         'item_id',
     ];
-    public function item(){
+    public function item()
+    {
         return $this->belongsTo(item::class);
     }
-    public function payment(){
-        return $this->belongsToMany(payment::class);
+    public function payments()
+    {
+        return $this->hasMany(payment::class);
     }
 }

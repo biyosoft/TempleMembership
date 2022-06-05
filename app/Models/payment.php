@@ -7,17 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class payment extends Model
 {
-
-    protected $fillable = [
-        'customer_id',
-        'item_code_id'
-    ];
     use HasFactory;
 
-    public function membership(){
-        return $this->hasMany(membership::class);
+    protected $fillable = [
+        'payment_date',
+        'amount',
+        'member_id'
+    ];
+
+    public function membership()
+    {
+        return $this->belongsTo(membership::class);
     }
 
-   
-
+    public function paymentDetails()
+    {
+        return $this->hasMany(PaymentDetail::class);
+    }
 }

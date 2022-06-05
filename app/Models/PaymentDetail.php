@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class item extends Model
+class PaymentDetail extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'title',
-        'year',
+        'payment_id',
+        'item_code_id',
         'amount'
     ];
-    use HasFactory;
-    public function membership()
+
+    public function payment()
     {
-        return $this->hasMany(membership::class);
+        return $this->belongsTo(payment::class);
     }
 }

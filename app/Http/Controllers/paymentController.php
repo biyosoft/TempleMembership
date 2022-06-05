@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePaymentRequest;
 use App\Models\item;
 use App\Models\membership;
 use App\Models\payment;
+use App\Models\PaymentDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class paymentController extends Controller
@@ -16,6 +19,7 @@ class paymentController extends Controller
      */
     public function index()
     {
+        return view("payments.index");
     }
 
     /**
@@ -33,17 +37,55 @@ class paymentController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * First find member by id then find his latest payment, create new payment, then save item details in payment details
+     * 
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePaymentRequest $request)
     {
+        // validate input
         $input = $request->all();
-        $item_code_id = $input['item_code_id'];
-        $input['item_code_id'] = implode(',', $item_code_id);
 
-        payment::create($input);
+        $timeNow = Carbon::now();
+        // get member and his latest payment
+        $member = membership::find($input['member_id']);
+        $latest_payment = $member ? item::find($member->item_id) : null;
+        $latest_year_found = $latest_payment ? $latest_payment->year : null;
+
+        // Create new payment
+        $payment = payment::create([
+            'payment_date' => $timeNow->toDateString(),
+            'member_id' => $input['member_id'],
+            'amount' => $input['amount'],
+        ]);
+
+        // From items selected by user find the latest year also save payment details
+        $latest_year = 0;
+        $latest_year_id = null;
+        $items = item::findMany($input['item_code_ids']);
+        $items->each(function ($item, $key) use ($payment, $latest_year, $latest_year_id) {
+            if ($item->year > $latest_year) {
+                $latest_year = $item->year;
+                $latest_year_id = $item->id;
+            }
+            PaymentDetail::create([
+                "payment_id" => $payment->id,
+                "item_code_id" => $item->id,
+                "amount" => $item->amount,
+            ]);
+        });
+
+        if (is_null($latest_year_found)) {
+            $member->item_id = $latest_year_id;
+            $member->save();
+        } else if ($latest_year_found < $latest_year) {
+            $member->item_id = $latest_year_id;
+            $member->save();
+        }
+
+        return redirect()->route('payments.index')->with('success', 'New Payment Added');
     }
 
     /**
