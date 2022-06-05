@@ -14,7 +14,7 @@ class   itemController extends Controller
      */
     public function index()
     {
-        return view('items.add');
+        return view('items.index');
     }
 
     /**
@@ -25,6 +25,7 @@ class   itemController extends Controller
     public function create()
     {
         //
+        return view('items.create');
     }
 
     /**
@@ -36,16 +37,16 @@ class   itemController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required',
-            'year'=>'required',
-            'amount'=>'required',
+            'title' => 'required',
+            'year' => 'required',
+            'amount' => 'required',
         ]);
         $items = new item();
         $items->title = $request->input('title');
         $items->year = $request->input('year');
         $items->amount = $request->input('amount');
         $items->save();
-        return redirect()->route('items.add')->with('success','New Item Added');
+        return redirect()->route('items.index')->with('success', 'New Item Added');
     }
 
     /**
@@ -92,6 +93,6 @@ class   itemController extends Controller
     {
         $items = item::find($id);
         $items->delete();
-        return redirect()->back()->with('error','Item Deleted');
+        return redirect()->back()->with('error', 'Item Deleted');
     }
 }

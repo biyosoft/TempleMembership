@@ -1,11 +1,6 @@
 @extends('layouts.main')
 @section('content')
 <div class="row mt-4">
-    <div class="col-md-8">
-        <div class="card card-body">
-        <livewire:item-table/>
-        </div>
-    </div>
     <div class="col-md-4">
         <div class="card card-body">
             <h4 class="text-center text-success"><i>Add New Item</i></h4>
@@ -13,8 +8,8 @@
             <form action="{{route('items.store')}}" method="POST">
                 @csrf
                 <div class="form-group mb-3">
-                <label for="">Title</label>
-                <input type="text" class="form-control" name="title" placeholder="Member_fee-2020">
+                    <label for="">Title</label>
+                    <input type="text" class="form-control" name="title" placeholder="Member_fee-2020">
                 </div>
                 <div class="form-group mb-3">
                     <label for="">Year</label>

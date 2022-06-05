@@ -1,8 +1,8 @@
 @extends('layouts.main')
 @section('content')
-<div class="container mt-4">
+<div class="mt-4">
     <div class="card card-body">
-        <livewire:membership-table/>
+        <livewire:item-table />
     </div>
 </div>
 @endsection

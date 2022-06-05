@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
+
 use App\Models\item;
 use App\Models\membership;
 use Illuminate\Support\Carbon;
@@ -45,10 +46,10 @@ final class membershipTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return  \Illuminate\Database\Eloquent\Builder<\App\Models\membership>|null
-    */
+     * PowerGrid datasource.
+     *
+     * @return  \Illuminate\Database\Eloquent\Builder<\App\Models\membership>|null
+     */
     public function datasource(): ?Builder
     {
         return membership::query();
@@ -97,15 +98,14 @@ final class membershipTable extends PowerGridComponent
             ->addColumn('gvBrowseUDF_TARIKHMEMOHON')
             ->addColumn('gvBrowseUDF_PEKERJAAN')
             ->addColumn('gvBrowseUDF_JANTINA')
-            ->addColumn('item_id',function(membership $model){
-                return (!empty($model->item) ? $model->item->title   : 'Null')."-".
-                (!empty($model->item) ? $model->item->year   : 'Null')
-                ;
+            ->addColumn('item_id', function (membership $model) {
+                return (!empty($model->item) ? $model->item->title   : 'Null') . "-" .
+                    (!empty($model->item) ? $model->item->year   : 'Null');
             })
-            ->addColumn('created_at_formatted', function(membership $model) { 
+            ->addColumn('created_at_formatted', function (membership $model) {
                 return Carbon::parse($model->created_at)->format('d/m/Y H:i:s');
             })
-            ->addColumn('updated_at_formatted', function(membership $model) { 
+            ->addColumn('updated_at_formatted', function (membership $model) {
                 return Carbon::parse($model->updated_at)->format('d/m/Y H:i:s');
             });
     }
@@ -119,7 +119,7 @@ final class membershipTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -242,8 +242,7 @@ final class membershipTable extends PowerGridComponent
                 ->sortable()
                 ->makeInputDatePicker('updated_at'),
 
-        ]
-;
+        ];
     }
 
     /*
@@ -254,29 +253,29 @@ final class membershipTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid membership Action Buttons.
      *
      * @return array<int, \PowerComponents\LivewirePowerGrid\Button>
      */
 
-    
+
     public function actions(): array
     {
-       return [
-           Button::add('edit')
-               ->caption('Edit')
-               ->class('btn btn-info cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('members.edit', ['id' => 'id']),
+        return [
+            Button::add('edit')
+                ->caption('Edit')
+                ->class('btn btn-info cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('members.edit', ['member' => 'id']),
 
-           Button::add('destroy')
-               ->caption('Delete')
-               ->class('btn btn-danger cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('members.destroy', ['id' => 'id'])
-               ->method('delete')
+            Button::add('destroy')
+                ->caption('Delete')
+                ->class('btn btn-danger cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                ->route('members.destroy', ['member' => 'id'])
+                ->method('delete')
         ];
     }
-    
+
 
     /*
     |--------------------------------------------------------------------------
@@ -286,7 +285,7 @@ final class membershipTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid membership Action Rules.
      *
      * @return array<int, \PowerComponents\LivewirePowerGrid\Rules\RuleActions>
@@ -314,7 +313,7 @@ final class membershipTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid membership Update.
      *
      * @param array<string,string> $data

@@ -16,9 +16,6 @@ class paymentController extends Controller
      */
     public function index()
     {
-        $items = item::all();
-        $memberships = membership::all();
-        return view('payments.add',compact('items','memberships'));
     }
 
     /**
@@ -29,6 +26,9 @@ class paymentController extends Controller
     public function create()
     {
         //
+        $items = item::all();
+        $memberships = membership::all();
+        return view('payments.create', compact('items', 'memberships'));
     }
 
     /**
@@ -41,7 +41,7 @@ class paymentController extends Controller
     {
         $input = $request->all();
         $item_code_id = $input['item_code_id'];
-        $input['item_code_id'] = implode(',',$item_code_id);
+        $input['item_code_id'] = implode(',', $item_code_id);
 
         payment::create($input);
     }

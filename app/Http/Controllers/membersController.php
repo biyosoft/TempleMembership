@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\membership;
 use App\Models\item;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 class membersController extends Controller
 {
     /**
@@ -15,9 +15,7 @@ class membersController extends Controller
      */
     public function index()
     {
-        $items = item::all();
-        $members = membership::all();
-        return view('members.add',compact('members','items'));
+        return view('members.index');
     }
 
     /**
@@ -27,7 +25,9 @@ class membersController extends Controller
      */
     public function create()
     {
-        //
+        $items = item::all();
+        $members = membership::all();
+        return view('members.add', compact('members', 'items'));
     }
 
     /**
@@ -54,7 +54,7 @@ class membersController extends Controller
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');
         $members->item_id = $request->input('item_id');
         $members->save();
-        return redirect()->route('members.show')->with('success','New Member Added Successfully');
+        return redirect()->route('members.show')->with('success', 'New Member Added Successfully');
     }
 
     /**
@@ -78,7 +78,7 @@ class membersController extends Controller
     {
         $members = membership::find($id);
         $items = item::all();
-        return view('members.edit',compact('members','items'));
+        return view('members.edit', compact('members', 'items'));
     }
 
     /**
@@ -106,8 +106,7 @@ class membersController extends Controller
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');
         $members->item_id = $request->input('item_id');
         $members->save();
-        return redirect()->route('members.show')->with('success','Member Data Updated');
-
+        return redirect()->route('members.index')->with('success', 'Member Data Updated');
     }
 
     /**
@@ -120,6 +119,6 @@ class membersController extends Controller
     {
         $members = membership::find($id);
         $members->delete();
-        return redirect()->route('members.show')->with('error','Member Deleted');
+        return redirect()->route('members.index')->with('error', 'Member Deleted');
     }
 }
