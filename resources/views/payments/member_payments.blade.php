@@ -3,7 +3,7 @@
 <div class="mt-4">
     <div class="card">
         <div class="card-header">
-            <h4>{{$payments[0] ? $payments[0]->member->gvBrowseCompanyName : ""}}'s Payments</h4>
+            <h4>{{count($payments) > 0 ? $payments[0]->member->gvBrowseCompanyName : ""}}'s Payments</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
