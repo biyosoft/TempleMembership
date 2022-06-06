@@ -36,24 +36,25 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="amount-input">Amount</label>
-                            <input name="amount" class="form-control" readonly id="amount-input" required/>
+                            <input name="amount" class="form-control" readonly id="amount-input" required />
                         </div>
                     </div>
                 </div>
+                <div id="siblings-container" class="row justify-content-center"></div>
                 <div class="row justify-content-center">
                     <div class="form-group mb-3">
                         <button style="float: right;" class="btn btn-info" type="submit">Save Payment</button>
                     </div>
                 </div>
+            </form>
         </div>
-
-        </form>
     </div>
-</div>
 </div>
 @endsection
 @section('scripts')
 <script>
+    const members = <?= json_encode($memberships) ?>;
+    let siblings = [];
     $('.addro').select2({
 
         placeholder: "Select Customer",
@@ -75,6 +76,42 @@
         });
 
         $('#amount-input').val(totalAmount);
+    });
+
+    $("#customer-select").on("change", function(event) {
+        const selectedValue = $(this).val();
+        if (selectedValue === "") {
+            $('#siblings-container').html('');
+            return;
+        }
+
+        const selectedMember = members.find(member => member.id == selectedValue);
+
+        siblings = members.filter(member => member.gvBrowseAttention == selectedMember.gvBrowseAttention && member.id != selectedValue);
+
+        if (siblings.length > 0) {
+            let html = `<div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <label for="sibling-select">Family</label>
+                                <select multiple="multiple" class="form-control addrow" name="sibling_ids[]" id="sibling-select">
+                                    <option value="">--- select --- </option>`;
+            $.each(siblings, function(index, sibling) {
+                html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} - ${sibling.gvBrowseAttention} ( ${sibling.gvBrowseCode} )</option>`;
+            });
+            html += `</select>
+                    </div>
+                </div>`;
+            $('#siblings-container').html(html);
+
+            $("#siblings-container").find("#sibling-select").select2({
+                placeholder: "Family",
+                allowClear: true,
+                tags: true,
+                tokenSeparators: [',']
+            });
+        } else {
+            $('#siblings-container').html('');
+        }
     });
 </script>
 @endsection
