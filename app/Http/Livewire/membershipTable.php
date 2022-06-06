@@ -84,6 +84,34 @@ final class membershipTable extends PowerGridComponent
     public function addColumns(): ?PowerGridEloquent
     {
         return PowerGrid::eloquent()
+            ->addColumn('action', function (membership $membership) {
+                $editRoute = route('members.edit', $membership->id);
+                $deleteRoute = route('members.destroy', $membership->id);
+                $addPaymentRoute = route('payments.create', ['member_id' => $membership->id]);
+                $allPaymentsRoute = route('payments.member_payments', $membership->id);
+                $csrf = csrf_token();
+                return '
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="' . $editRoute . '">Edit</a>
+                        <div class="dropdown-divider"></div>' .
+                    // <form target="" action="' . $deleteRoute . '" method="post">
+                    //     <input type="hidden" name="_method" value="delete">
+                    //     <input type="hidden" name="_token" value="' . $csrf . '">
+                    //     <button type="submit" title="" class="dropdown-item" primary-key="id">Delete</button>
+                    // </form>
+                    // <div class="dropdown-divider"></div>
+                    '<a class="dropdown-item" href="' . $addPaymentRoute . '">Add Payment</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="' . $allPaymentsRoute . '">All Payments</a>
+                    </div>
+                </div>
+                ';
+            })
             ->addColumn('id')
             ->addColumn('gvBrowseCode')
             ->addColumn('gvBrowseCompanyName')
@@ -127,6 +155,9 @@ final class membershipTable extends PowerGridComponent
     public function columns(): array
     {
         return [
+            Column::add()
+                ->title('Action')
+                ->field('action'),
             Column::add()
                 ->title('ID')
                 ->field('id')
@@ -259,7 +290,7 @@ final class membershipTable extends PowerGridComponent
      * @return array<int, \PowerComponents\LivewirePowerGrid\Button>
      */
 
-
+    /*
     public function actions(): array
     {
         return [
@@ -289,7 +320,7 @@ final class membershipTable extends PowerGridComponent
                 ->method("get"),
         ];
     }
-
+    */
 
     /*
     |--------------------------------------------------------------------------

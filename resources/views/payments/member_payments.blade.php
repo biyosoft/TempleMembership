@@ -15,6 +15,7 @@
                             <th class="border-0">Date</th>
                             <th class="border-0">Amount</th>
                             <th class="border-0">Admin Name</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +33,9 @@
                             <td>{{ $payment->payment_date }}</td>
                             <td>{{ $payment->amount }}</td>
                             <td>{{ $payment->admin->name }}</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-github">Print Receipt</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

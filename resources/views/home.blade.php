@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 <div class="row mt-4">
-    <div class="col-12 mb-4">
+    <div class="col-12 col-sm-4 mb-4">
         <div class="card border-0 shadow">
             <div class="card-body">
                 <div class="px-xl-0">
@@ -11,9 +11,29 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-sm-4 mb-4">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <div class="px-xl-0">
+                    <h2 class="h5">Test</h2>
+                    <h3 class="fw-extrabold mb-1">0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-4 mb-4">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <div class="px-xl-0">
+                    <h2 class="h5">Test</h2>
+                    <h3 class="fw-extrabold mb-1">0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="col-12 col-sm-4 mb-4">
         <div class="card border-0 shadow">
             <div class="card-header">
                 <h4>Customer Per Year for 5 Years</h4>
@@ -35,7 +55,7 @@
         </div>
     </div>
 
-    <div class="col-12 col-sm-6 col-xl-8 mb-4">
+    <div class="col-12 col-sm-4 mb-4">
         <div class="card border-0 shadow">
             <div class="card-header">
                 <h4>Payments for Last 5 Years</h4>

@@ -15,6 +15,7 @@
                             <th class="border-0">Date</th>
                             <th class="border-0">Amount</th>
                             <th class="border-0">Admin Name</th>
+                            <th class="border-0"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,7 +23,7 @@
                         <tr>
                             <td>{{ $payment->id }}</td>
                             <td>
-                                <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }}</div>
+                                <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }} ({{$payment->member->gvBrowseCode}})</div>
                                 @foreach($payment->paymentDetails as $paymentDetails)
                                 <div>
                                     <b>Item:</b> {{$paymentDetails->parentItem->title}}<br><b>Amount:</b> {{$paymentDetails->amount}}
@@ -32,6 +33,7 @@
                             <td>{{ $payment->payment_date }}</td>
                             <td>{{ $payment->amount }}</td>
                             <td>{{ $payment->admin->name }}</td>
+                            <td><a href="#" class="btn btn-sm btn-github">Print Receipt</a></td>
                         </tr>
                         @endforeach
                     </tbody>
