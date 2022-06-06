@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<div class="row mt-4">
+<div class="row mt-4 justify-content-center">
     <div class="col-md-4">
         <div class="card card-body">
             <h4 class="text-center text-success"><i>Add New Item</i></h4>
