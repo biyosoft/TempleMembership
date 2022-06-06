@@ -36,7 +36,7 @@ class paymentController extends Controller
         $member_id = $member_id ? $member_id : "";
         $items = item::all();
         $memberships = membership::all();
-        
+
         return view('payments.create', compact('items', 'memberships', 'member_id'));
     }
 
@@ -89,6 +89,46 @@ class paymentController extends Controller
         } else if ($latest_year_found < $latest_year) {
             $member->item_id = $latest_year_id;
             $member->save();
+        }
+
+
+        if ($input["sibling_ids"]) {
+            foreach ($input["sibling_ids"] as $sibling_id) {
+                $payment = payment::create([
+                    'payment_date' => $timeNow->toDateString(),
+                    'member_id' => $sibling_id,
+                    'amount' => $input['amount'],
+                    'admin_id' => auth()->user()->id,
+                ]);
+
+                // get sibling and his latest payment
+                $sibling = membership::find($sibling_id);
+                $latest_payment = $sibling ? item::find($sibling->item_id) : null;
+                $latest_year_found = $latest_payment ? $latest_payment->year : null;
+
+                // From items selected by user find the latest year also save payment details
+                $latest_year = 0;
+                $latest_year_id = null;
+                $items->each(function ($item, $key) use ($payment, $latest_year, $latest_year_id) {
+                    if ($item->year > $latest_year) {
+                        $latest_year = $item->year;
+                        $latest_year_id = $item->id;
+                    }
+                    PaymentDetail::create([
+                        "payment_id" => $payment->id,
+                        "item_code_id" => $item->id,
+                        "amount" => $item->amount,
+                    ]);
+                });
+
+                if (is_null($latest_year_found)) {
+                    $sibling->item_id = $latest_year_id;
+                    $sibling->save();
+                } else if ($latest_year_found < $latest_year) {
+                    $sibling->item_id = $latest_year_id;
+                    $sibling->save();
+                }
+            }
         }
 
         return redirect()->route('payments.index')->with('success', 'New Payment Added');
