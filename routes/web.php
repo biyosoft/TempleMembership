@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\itemController;
 use App\Http\Controllers\membersController;
 use App\Http\Controllers\paymentController;
@@ -19,7 +20,10 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::controller(HomeController::class)->group(function () {
+        Route::get("/", "index")->name("home");
+        Route::get("/home", "index")->name("home");
+    });
     Route::resource("items", itemController::class, ['only' => ['index', 'create', 'store']]);
     Route::resource('members', membersController::class);
     Route::resource("payments", paymentController::class);
