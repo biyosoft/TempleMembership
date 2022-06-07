@@ -19,8 +19,8 @@ class paymentController extends Controller
      */
     public function index()
     {
-        // get all payments
-        $payments = payment::all();
+        // get paginated payments
+        $payments = payment::orderByDesc("payment_date")->paginate(10);
         return view("payments.index", compact("payments"));
     }
 
@@ -183,7 +183,7 @@ class paymentController extends Controller
     public function member_payments($id)
     {
         // get all payments for a member
-        $payments = payment::where('member_id', $id)->get();
+        $payments = payment::where('member_id', $id)->orderByDesc("payment_date")->paginate(10);
         return view("payments.member_payments", compact("payments"));
     }
 }

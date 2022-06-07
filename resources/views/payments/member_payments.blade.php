@@ -23,15 +23,15 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>
-                                <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }}</div>
+                                <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }} ({{$payment->member->gvBrowseCode}})</div>
                                 @foreach($payment->paymentDetails as $paymentDetails)
                                 <div>
-                                    <b>Item:</b> {{$paymentDetails->parentItem->title}}<br><b>Amount:</b> {{$paymentDetails->amount}}
+                                    <b>Item:</b> {{$paymentDetails->parentItem->title}}<br><b>Amount:</b> @convert($paymentDetails->amount)
                                 </div>
                                 @endforeach
                             </td>
                             <td>{{ $payment->payment_date }}</td>
-                            <td>{{ $payment->amount }}</td>
+                            <td>@convert($payment->amount)</td>
                             <td>{{ $payment->admin->name }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-github">Print Receipt</a>
@@ -40,6 +40,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div>{{ $payments->links() }}</div>
             </div>
         </div>
     </div>
