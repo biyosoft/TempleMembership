@@ -23,9 +23,9 @@ class CreateMembershipsTable extends Migration
             $table->string('gvBrowsePhone1');
             $table->string('gvBrowseAddress1');
             $table->string('gvBrowseArea');
-            $table->string('gvBrowseUDF_DOB');
+            $table->date('gvBrowseUDF_DOB');
             $table->string('gvBrowseUDF_NOAHLISKMC');
-            $table->string('gvBrowseUDF_TARIKHMEMOHON');
+            $table->date('gvBrowseUDF_TARIKHMEMOHON');
             $table->string('gvBrowseUDF_PEKERJAAN')->nullable();
             $table->string('gvBrowseUDF_JANTINA')->nullable();
             $table->timestamps();
