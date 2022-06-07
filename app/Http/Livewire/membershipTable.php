@@ -98,14 +98,14 @@ final class membershipTable extends PowerGridComponent
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="' . $editRoute . '">Edit</a>
-                        <div class="dropdown-divider"></div>' .
-                    // <form target="" action="' . $deleteRoute . '" method="post">
-                    //     <input type="hidden" name="_method" value="delete">
-                    //     <input type="hidden" name="_token" value="' . $csrf . '">
-                    //     <button type="submit" title="" class="dropdown-item" primary-key="id">Delete</button>
-                    // </form>
-                    // <div class="dropdown-divider"></div>
-                    '<a class="dropdown-item" href="' . $addPaymentRoute . '">Add Payment</a>
+                        <div class="dropdown-divider"></div> 
+                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); const sure = confirm(\'Sure to delete?\'); if(sure) document.getElementById(\'delete-form\').submit();">Delete</a>
+                        <form id="delete-form" action="' . $deleteRoute . '" method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="hidden" name="_token" value="' . $csrf . '">
+                        </form>
+                        <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="' . $addPaymentRoute . '">Add Payment</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="' . $allPaymentsRoute . '">All Payments</a>
                     </div>

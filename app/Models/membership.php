@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class membership extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = [
         'gvBrowseCode',
         'gvBrowseCompanyName',
@@ -30,6 +33,6 @@ class membership extends Model
     }
     public function payments()
     {
-        return $this->hasMany(payment::class);
+        return $this->hasMany(payment::class, 'member_id');
     }
 }

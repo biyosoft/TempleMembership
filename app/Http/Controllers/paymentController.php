@@ -92,7 +92,7 @@ class paymentController extends Controller
         }
 
 
-        if ($input["sibling_ids"]) {
+        if (array_key_exists("sibling_ids", $input)) {
             foreach ($input["sibling_ids"] as $sibling_id) {
                 $payment = payment::create([
                     'payment_date' => $timeNow->toDateString(),
@@ -175,9 +175,17 @@ class paymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(payment $payment)
     {
         //
+        // delete payment details
+        foreach ($payment->paymentDetails as $paymentDetail) {
+            $paymentDetail->delete();
+        }
+        // delete payment
+        $payment->delete();
+
+        return redirect()->route('payments.index')->with('success', 'Payment Deleted');
     }
 
     public function member_payments($id)

@@ -115,10 +115,18 @@ class membersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        $members = membership::find($id);
-        $members->delete();
+        $membership = membership::findOrFail($id);
+
+        foreach ($membership->payments as $payment) {
+            foreach ($payment->paymentDetails as $paymentDetail) {
+                $paymentDetail->delete();
+            }
+            $payment->delete();
+        }
+        $membership->delete();
+
         return redirect()->route('members.index')->with('error', 'Member Deleted');
     }
 }
