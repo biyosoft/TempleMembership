@@ -66,9 +66,11 @@ class   itemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         //
+        $item = item::findOrFail($id);
+        return view('items.edit', compact('item'));
     }
 
     /**
@@ -81,6 +83,18 @@ class   itemController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title' => 'required',
+            'year' => 'required',
+            'amount' => 'required',
+        ]);
+
+        $items = item::findOrFail($id);
+        $items->title = $request->input('title');
+        $items->year = $request->input('year');
+        $items->amount = $request->input('amount');
+        $items->save();
+        return redirect()->route('items.index')->with('success', 'Item Updated');
     }
 
     /**
@@ -91,7 +105,7 @@ class   itemController extends Controller
      */
     public function destroy($id)
     {
-        $items = item::find($id);
+        $items = item::findOrFail($id);
         $items->delete();
         return redirect()->back()->with('error', 'Item Deleted');
     }

@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
         Route::get("/", "index")->name("home");
         Route::get("/home", "index")->name("home");
     });
-    Route::resource("items", itemController::class, ['only' => ['index', 'create', 'store']]);
+    Route::resource("items", itemController::class);
     Route::resource('members', membersController::class);
     Route::resource("payments", paymentController::class);
     Route::group(['prefix' => 'payments'], function () {

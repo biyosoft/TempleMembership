@@ -24,6 +24,6 @@ class PaymentDetail extends Model
 
     public function parentItem()
     {
-        return $this->belongsTo(item::class, "item_code_id");
+        return $this->belongsTo(item::class, "item_code_id")->withTrashed();
     }
 }
