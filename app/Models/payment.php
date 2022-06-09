@@ -12,12 +12,7 @@ class payment extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = [
-        'payment_date',
-        'amount',
-        'member_id',
-        'admin_id',
-    ];
+    protected $fillable = [];
 
     public function member()
     {

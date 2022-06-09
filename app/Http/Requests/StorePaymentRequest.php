@@ -25,7 +25,8 @@ class StorePaymentRequest extends FormRequest
     {
         return [
             //
-            "member_id" => "required|numeric",
+            "member_id" => "required_without:household_ids|numeric",
+            "household_ids" => "required_without:member_id|array",
             "amount" => "required|numeric",
             "item_code_ids" => "required|array",
         ];

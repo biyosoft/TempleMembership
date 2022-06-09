@@ -9,6 +9,7 @@ use App\Models\payment;
 use App\Models\PaymentDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class paymentController extends Controller
 {
@@ -34,10 +35,15 @@ class paymentController extends Controller
         //
         $member_id = request()->input("member_id");
         $member_id = $member_id ? $member_id : "";
-        $items = item::all();
-        $memberships = membership::all();
+        $items = item::orderByDesc("year")->get();
+        $memberships = membership::orderBy('gvBrowseCompanyName')->get();
+        $households = DB::table("memberships")
+            ->select(DB::raw("min(id) id, gvBrowseAttention household"))
+            ->groupBy("gvBrowseAttention")
+            ->orderBy("gvBrowseAttention")
+            ->get();
 
-        return view('payments.create', compact('items', 'memberships', 'member_id'));
+        return view('payments.create', compact('items', 'memberships', 'member_id', 'households'));
     }
 
     /**
@@ -54,84 +60,89 @@ class paymentController extends Controller
         $input = $request->all();
 
         $timeNow = Carbon::now();
-        // get member and his latest payment
-        $member = membership::find($input['member_id']);
-        $latest_payment = $member ? item::find($member->item_id) : null;
-        $latest_year_found = $latest_payment ? $latest_payment->year : null;
 
-        // Create new payment
-        $payment = payment::create([
-            'payment_date' => $timeNow->toDateString(),
-            'member_id' => $input['member_id'],
-            'amount' => $input['amount'],
-            'admin_id' => auth()->user()->id,
-        ]);
+        // check if member_id exists or not
+        if (array_key_exists("member_id", $input)) {
+            $member = membership::findOrFail($input["member_id"]);
 
-        // From items selected by user find the latest year also save payment details
-        $latest_year = 0;
-        $latest_year_id = null;
-        $items = item::findMany($input['item_code_ids']);
-        $items->each(function ($item, $key) use ($payment, $latest_year, $latest_year_id) {
-            if ($item->year > $latest_year) {
-                $latest_year = $item->year;
-                $latest_year_id = $item->id;
-            }
-            PaymentDetail::create([
-                "payment_id" => $payment->id,
-                "item_code_id" => $item->id,
-                "amount" => $item->amount,
-            ]);
-        });
+            // save member payment
+            $payment = new payment;
+            $payment->member_id = $member->id;
+            $payment->payment_date = $timeNow->toDateString();
+            $payment->amount = $input["amount"];
+            $payment->admin_id = auth()->user()->id;
+            $payment->save();
 
-        if (is_null($latest_year_found)) {
-            $member->item_id = $latest_year_id;
-            $member->save();
-        } else if ($latest_year_found < $latest_year) {
-            $member->item_id = $latest_year_id;
-            $member->save();
-        }
+            $memberItem = $member->item;
+            $memberYear = $memberItem ? $memberItem->year : 0;
 
+            $latest_year = 0;
+            $latest_year_item_id = null;
 
-        if (array_key_exists("sibling_ids", $input)) {
-            foreach ($input["sibling_ids"] as $sibling_id) {
-                $payment = payment::create([
-                    'payment_date' => $timeNow->toDateString(),
-                    'member_id' => $sibling_id,
-                    'amount' => $input['amount'],
-                    'admin_id' => auth()->user()->id,
-                ]);
+            // save payment details
+            foreach ($input["item_code_ids"] as $key => $item_id) {
+                $item = item::findOrFail($item_id);
 
-                // get sibling and his latest payment
-                $sibling = membership::find($sibling_id);
-                $latest_payment = $sibling ? item::find($sibling->item_id) : null;
-                $latest_year_found = $latest_payment ? $latest_payment->year : null;
-
-                // From items selected by user find the latest year also save payment details
-                $latest_year = 0;
-                $latest_year_id = null;
-                $items->each(function ($item, $key) use ($payment, $latest_year, $latest_year_id) {
-                    if ($item->year > $latest_year) {
-                        $latest_year = $item->year;
-                        $latest_year_id = $item->id;
-                    }
-                    PaymentDetail::create([
-                        "payment_id" => $payment->id,
-                        "item_code_id" => $item->id,
-                        "amount" => $item->amount,
-                    ]);
-                });
-
-                if (is_null($latest_year_found)) {
-                    $sibling->item_id = $latest_year_id;
-                    $sibling->save();
-                } else if ($latest_year_found < $latest_year) {
-                    $sibling->item_id = $latest_year_id;
-                    $sibling->save();
+                if ($item->year > $latest_year) {
+                    $latest_year = $item->year;
+                    $latest_year_item_id = $item->id;
                 }
+
+                $payment_detail = PaymentDetail::create([
+                    'payment_id' => $payment->id,
+                    'item_code_id' => $item->id,
+                    'amount' => $item->amount,
+                ]);
+            }
+
+            if (is_null($memberYear) || $memberYear < $latest_year) {
+                $member->item_id = $latest_year_item_id;
+                $member->save();
+            }
+
+            return redirect()->route('payments.index')->with('success', 'Payment has been created successfully');
+        }
+
+        foreach ($input["household_ids"] as $key => $member_id) {
+            $member = membership::findOrFail($member_id);
+
+            // save member payment
+            $payment = new payment;
+            $payment->member_id = $member->id;
+            $payment->payment_date = $timeNow->toDateString();
+            $payment->amount = $input["amount"] / count($input["household_ids"]);
+            $payment->admin_id = auth()->user()->id;
+            $payment->save();
+
+            $memberItem = $member->item;
+            $memberYear = $memberItem ? $memberItem->year : 0;
+
+            $latest_year = 0;
+            $latest_year_item_id = null;
+
+            // save payment details
+            foreach ($input["item_code_ids"] as $key => $item_id) {
+                $item = item::findOrFail($item_id);
+
+                if ($item->year > $latest_year) {
+                    $latest_year = $item->year;
+                    $latest_year_item_id = $item->id;
+                }
+
+                $payment_detail = PaymentDetail::create([
+                    'payment_id' => $payment->id,
+                    'item_code_id' => $item->id,
+                    'amount' => $item->amount,
+                ]);
+            }
+
+            if (is_null($memberYear) || $memberYear < $latest_year) {
+                $member->item_id = $latest_year_item_id;
+                $member->save();
             }
         }
 
-        return redirect()->route('payments.index')->with('success', 'New Payment Added');
+        return redirect()->route('payments.index')->with('success', 'Payment has been created successfully');
     }
 
     /**

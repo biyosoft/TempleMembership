@@ -15,7 +15,7 @@ class AddAdminForeignKeyToPayments extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             //
-            $table->foreignId("admin_id")->after("member_id")->constrained("payments");
+            $table->foreignId("admin_id")->after("member_id")->constrained("users");
         });
     }
 

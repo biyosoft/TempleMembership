@@ -7,12 +7,11 @@
             <hr>
             <form action="{{route('payments.store')}}" method="POST">
                 @csrf
-                <div class="row justify-content-center">
-
-                    <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label for="customer-select">Select Customer</label>
-                            <select class="form-control addro" name="member_id" id="customer-select" required>
+                            <select class="form-control select2" name="member_id" id="customer-select" required>
                                 <option value=""></option>
                                 @foreach($memberships as $member)
                                 <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} - {{$member->gvBrowseAttention}} ({{$member->gvBrowseCode}})</option>
@@ -20,40 +19,43 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="household-select">Select Household</label>
+                            <select id="household-select" class="form-control select2">
+                                <option value=""></option>
+                                @foreach($households as $household)
+                                <option value="{{$household->id}}">{{$household->household}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label for="item-select">Item Code</label>
-                            <select multiple="multiple" class="form-control addrow" name="item_code_ids[]" id="item-select" required>
-                                <option value="">--- select --- </option>
+                            <select multiple="multiple" class="form-control select2-multiple" name="item_code_ids[]" id="item-select" required>
+                                <option value=""> --- select --- </option>
                                 @foreach($items as $item)
                                 <option data-amount="{{$item->amount}}" value="{{$item->id}}">{{$item->title}} - {{$item->year}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
+                    <div class="col-md-6 d-none" id="siblings-container">
                         <div class="form-group mb-3">
-                            <label for="amount-input">Amount</label>
-                            <input name="amount" class="form-control" readonly id="amount-input" required />
-                        </div>
-                    </div>
-                </div>
-                <div id="siblings-container" class="row justify-content-center">
-                    <div class="col-md-12">
-                        <div class="form-group mb-3">
-                            <label for="sibling-select">Family</label>
-                            <select multiple="multiple" class="form-control addrow" name="sibling_ids[]" id="sibling-select">
-                                <option value="">--- select --- </option>
+                            <label for="family-select">Select Members</label>
+                            <select multiple="multiple" class="form-control select2-multiple" name="household_ids[]" id="family-select">
+                                <option value=""> --- select --- </option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="form-group mb-3">
-                        <button style="float: right;" class="btn btn-info" type="submit">Save Payment</button>
-                    </div>
+                <input name="amount" class="form-control" readonly id="amount-input" required hidden />
+                <div class="d-flex justify-content-between align-items-center">
+                    <button class="btn btn-info d-inline-block" type="submit">Save Payment</button>
+                    <span class="fs-3">RM<span class="fs-3" id="amount-span">0</span></span>
                 </div>
             </form>
         </div>
@@ -65,56 +67,94 @@
     $(function() {
         const members = <?= json_encode($memberships) ?>;
         let siblings = [];
-        $('.addro').select2({
 
-            placeholder: "Select Customer",
+        $('.select2').select2({
+            placeholder: "Select",
             allowClear: true,
+            width: "100%"
         });
 
-        $('.addrow').select2({
-            placeholder: "Select Year",
+        $('.select2-multiple').select2({
+            placeholder: "Select",
             allowClear: true,
             tags: true,
-            tokenSeparators: [',']
+            tokenSeparators: [','],
+            width: "100%"
         });
 
         $("#item-select").on("change", function(event) {
-            let totalAmount = 0;
+            let total = totalAmount();
 
-            $(this).find(':selected').each(function() {
-                totalAmount += parseInt($(this).data('amount'));
-            });
+            const selectedMembers = $("#family-select").val()
+            const selectedMembersCount = selectedMembers.length;
 
-            $('#amount-input').val(totalAmount);
+            if (selectedMembersCount > 1) {
+                total = total * selectedMembersCount;
+            }
+            $('#amount-input').val(total);
+            $('#amount-span').text(thousandSeparator(total));
+
         });
 
         $("#customer-select").on("change", function(event) {
             const selectedValue = $(this).val();
             if (selectedValue === "") {
-                $('#sibling-select').html('<ption value="">--- select --- </option>');
-                $("#sibling-select").trigger("change");
-                return;
-            }
-
-            const selectedMember = members.find(member => member.id == selectedValue);
-
-            siblings = members.filter(member => member.gvBrowseAttention == selectedMember.gvBrowseAttention && member.id != selectedValue);
-
-            if (siblings.length > 0) {
-                let html = ``;
-                $.each(siblings, function(index, sibling) {
-                    html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} - ${sibling.gvBrowseAttention} ( ${sibling.gvBrowseCode} )</option>`;
-                });
-                $('#sibling-select').html($(html));
-
-                $("#sibling-select").select2({
-                    placeholder: "Family",
-                    allowClear: true,
-                    tags: true,
-                    tokenSeparators: [',']
-                });
+                $("#household-select").prop("disabled", false);
+            } else {
+                $("#household-select").prop("disabled", true);
             }
         });
+
+        $("#household-select").on("change", function(event) {
+            const selectedValue = $(this).val();
+            if (selectedValue === "") {
+                $("#siblings-container").addClass("d-none");
+                $("#customer-select").prop("disabled", false);
+                $("#family-select").prop("required", false);
+                $("#family-select").html('<option value="">--- select --- </option>');
+            } else {
+                $("#customer-select").prop("disabled", true);
+                $("#siblings-container").removeClass("d-none");
+
+                const selectedMember = members.find(member => member.id == selectedValue);
+                siblings = members.filter(member => member.gvBrowseAttention == selectedMember.gvBrowseAttention);
+
+                if (siblings.length > 0) {
+                    let html = ``;
+                    $.each(siblings, function(index, sibling) {
+                        html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} - ${sibling.gvBrowseAttention} ( ${sibling.gvBrowseCode} )</option>`;
+                    });
+                    $('#family-select').html(html);
+                    $("#family-select").prop("required", true);
+                }
+            }
+        });
+
+        $("#family-select").on("change", function(event) {
+            const selectedMembers = $(this).val();
+            const selectedMembersCount = selectedMembers.length;
+
+            if (selectedMembersCount > 0) {
+                const total = totalAmount();
+                $('#amount-input').val(total * selectedMembersCount);
+                $('#amount-span').text(thousandSeparator(total * selectedMembersCount));
+            }
+        });
+
+        function totalAmount() {
+            const element = $("#item-select");
+            let totalAmount = 0;
+
+            element.find(':selected').each(function() {
+                totalAmount += parseInt($(this).data('amount'));
+            });
+
+            return totalAmount;
+        }
+
+        function thousandSeparator(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
     });
 </script>
 @endsection
