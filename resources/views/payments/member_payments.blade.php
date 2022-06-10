@@ -40,7 +40,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div>{{ $payments->links() }}</div>
+                <div class="d-flex justify-content-center align-items-center mt-4">{{ $payments->links() }}</div>
             </div>
         </div>
     </div>

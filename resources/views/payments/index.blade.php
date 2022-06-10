@@ -39,8 +39,8 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="#">{{ __('labels.print_receipt') }}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); const sure = confirm('Sure to delete'); if(sure) document.getElementById('delete-form').submit();">{{ __('labels.delete') }}</a>
-                                        <form id="delete-form" action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="d-none">
+                                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); const sure = confirm('Sure to delete'); if(sure) document.getElementById('delete-form-{{ $payment->id }}').submit();">{{ __('labels.delete') }}</a>
+                                        <form id="delete-form-{{ $payment->id }}" action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="d-none">
                                             @csrf
                                             <input type="hidden" name="_method" value="delete" />
                                         </form>
@@ -62,7 +62,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div>{{ $payments->links() }}</div>
+                <div class="d-flex justify-content-center align-items-center mt-4">{{ $payments->links() }}</div>
             </div>
         </div>
     </div>
