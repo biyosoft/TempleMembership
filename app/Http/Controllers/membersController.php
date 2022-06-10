@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMembershipRequest;
+use App\Http\Requests\UpdateMembershipRequest;
 use App\Models\membership;
 use App\Models\item;
 use Illuminate\Http\Request;
@@ -27,19 +29,21 @@ class membersController extends Controller
     {
         $items = item::orderBy('year')->get();
         $members = membership::orderby('gvBrowseCompanyName')->get();
-        return view('members.create', compact('members', 'items'));
+        $no_ahli_skmc = membership::max('gvBrowseUDF_NOAHLISKMC') + 1;
+        return view('members.create', compact('members', 'items', 'no_ahli_skmc'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreMembershipRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMembershipRequest $request)
     {
         $members = new membership();
-        $members->gvBrowseCode = $request->input('gvBrowseCode');
+        $code = $this->generate_code($request->input('gvBrowseCompanyName'));
+        $members->gvBrowseCode = $code;
         $members->gvBrowseCompanyName = $request->input('gvBrowseCompanyName');
         $members->gvBrowseAttention = $request->input('gvBrowseAttention');
         $members->gvBrowseUDF_TEMPATLAHIR = $request->input('gvBrowseUDF_TEMPATLAHIR');
@@ -48,13 +52,13 @@ class membersController extends Controller
         $members->gvBrowseAddress1 = $request->input('gvBrowseAddress1');
         $members->gvBrowseArea = $request->input('gvBrowseArea');
         $members->gvBrowseUDF_DOB = $request->input('gvBrowseUDF_DOB');
-        $members->gvBrowseUDF_NOAHLISKMC = $request->input('gvBrowseUDF_NOAHLISKMC ');
+        $members->gvBrowseUDF_NOAHLISKMC = $request->input('gvBrowseUDF_NOAHLISKMC');
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');
         $members->item_id = $request->input('item_id');
         $members->save();
-        return redirect()->route('members.show')->with('success', 'New Member Added Successfully');
+        return redirect()->route('members.index')->with('success', __('messages.membership_created_successfully'));
     }
 
     /**
@@ -84,14 +88,13 @@ class membersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateMembershipRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMembershipRequest $request, $id)
     {
         $members = membership::find($id);
-        $members->gvBrowseCode = $request->input('gvBrowseCode');
         $members->gvBrowseCompanyName = $request->input('gvBrowseCompanyName');
         $members->gvBrowseAttention = $request->input('gvBrowseAttention');
         $members->gvBrowseUDF_TEMPATLAHIR = $request->input('gvBrowseUDF_TEMPATLAHIR');
@@ -100,13 +103,12 @@ class membersController extends Controller
         $members->gvBrowseAddress1 = $request->input('gvBrowseAddress1');
         $members->gvBrowseArea = $request->input('gvBrowseArea');
         $members->gvBrowseUDF_DOB = $request->input('gvBrowseUDF_DOB');
-        $members->gvBrowseUDF_NOAHLISKMC = $request->input('gvBrowseUDF_NOAHLISKMC ');
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');
         $members->item_id = $request->input('item_id');
         $members->save();
-        return redirect()->route('members.index')->with('success', 'Member Data Updated');
+        return redirect()->route('members.index')->with('success', __('messages.membership_updated_successfully'));
     }
 
     /**
@@ -127,6 +129,22 @@ class membersController extends Controller
         }
         $membership->delete();
 
-        return redirect()->route('members.index')->with('error', 'Member Deleted');
+        return redirect()->route('members.index')->with('error', __('messages.membership_deleted_successfully'));
+    }
+
+    private function generate_code(string $name)
+    {
+        $result = membership::where('gvBrowseCode', 'LIKE', $name[0] . '%')->max('gvBrowseCode');
+        if ($result == null) {
+            return $name[0] . '0001';
+        }
+
+
+        $code_without_letter = substr($result, 1);
+        $number = (int)$code_without_letter;
+        $number++;
+        $number = str_pad($number, 4, '0', STR_PAD_LEFT);
+        $code = $name[0] . $number;
+        return $code;
     }
 }

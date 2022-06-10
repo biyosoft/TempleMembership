@@ -46,7 +46,7 @@ class   itemController extends Controller
         $items->year = $request->input('year');
         $items->amount = $request->input('amount');
         $items->save();
-        return redirect()->route('items.index')->with('success', 'New Item Added');
+        return redirect()->route('items.index')->with('success', __('messages.item_code_created_successfully'));
     }
 
     /**
@@ -94,7 +94,7 @@ class   itemController extends Controller
         $items->year = $request->input('year');
         $items->amount = $request->input('amount');
         $items->save();
-        return redirect()->route('items.index')->with('success', 'Item Updated');
+        return redirect()->route('items.index')->with('success', __('messages.item_code_updated_successfully'));
     }
 
     /**
@@ -107,6 +107,6 @@ class   itemController extends Controller
     {
         $items = item::findOrFail($id);
         $items->delete();
-        return redirect()->back()->with('error', 'Item Deleted');
+        return redirect()->back()->with('error', __('messages.item_code_deleted_successfully'));
     }
 }

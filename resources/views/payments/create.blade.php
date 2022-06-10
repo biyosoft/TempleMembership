@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="customer-select">{{ __('labels.select_customer') }}</label>
+                            <label for="customer-select">{{ __('labels.select_member_name') }}</label>
                             <select class="form-control select2" name="member_id" id="customer-select" required>
                                 <option value=""></option>
                                 @foreach($memberships as $member)
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="item-select">{{ __('labels.item_code') }}</label>
+                            <label for="item-select">{{ __('labels.select_payment_year') }}</label>
                             <select multiple="multiple" class="form-control select2-multiple" name="item_code_ids[]" id="item-select" required>
                                 <option value=""> --- select --- </option>
                                 @foreach($items as $item)
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-md-6 d-none" id="siblings-container">
                         <div class="form-group mb-3">
-                            <label for="family-select">{{ __('labels.select_members') }}</label>
+                            <label for="family-select">{{ __('labels.select_members_name') }}</label>
                             <select multiple="multiple" class="form-control select2-multiple" name="household_ids[]" id="family-select">
                                 <option value=""> --- select --- </option>
                             </select>
@@ -52,9 +52,13 @@
                     </div>
                 </div>
                 <input name="amount" class="form-control" readonly id="amount-input" required hidden />
-                <div class="d-flex justify-content-between align-items-center">
-                    <button class="btn btn-info d-inline-block" type="submit">{{ __('labels.save') }}</button>
-                    <span class="fs-3">RM<span class="fs-3" id="amount-span">0</span></span>
+                <div class="d-flex flex-column justify-content-end align-items-end fs-5">
+                    <span>{{ __('messages.total_years') }}: <span class="fw-bold" id="total-years-span">0</span></span>
+                    <span>{{ __('messages.total_members') }}: <span class="fw-bold" id="total-members-span">0</span></span>
+                    <span>{{ __('messages.total_to_be_paid') }}: <span class="fw-bold">RM<span id="amount-span">0</span></span></span>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button class="btn btn-lg btn-primary" type="submit">{{ __('labels.save_payment') }}</button>
                 </div>
             </form>
         </div>
@@ -84,6 +88,9 @@
         $("#item-select").on("change", function(event) {
             let total = totalAmount();
 
+            const selectedItems = $(this).val();
+            selectedItemsCount = selectedItems.length;
+
             const selectedMembers = $("#family-select").val()
             const selectedMembersCount = selectedMembers.length;
 
@@ -92,25 +99,28 @@
             }
             $('#amount-input').val(total);
             $('#amount-span').text(thousandSeparator(total));
-
+            $("#total-years-span").text(selectedItemsCount);
         });
 
         $("#customer-select").on("change", function(event) {
             const selectedValue = $(this).val();
             if (selectedValue === "") {
                 $("#household-select").prop("disabled", false);
+                $("#total-members-span").text(0);
             } else {
                 $("#household-select").prop("disabled", true);
+                $("#total-members-span").text(1);
             }
         });
 
         $("#household-select").on("change", function(event) {
             const selectedValue = $(this).val();
+            $("#family-select").html('<option value="">--- select --- </option>');
+            $("#family-select").trigger("change");
             if (selectedValue === "") {
                 $("#siblings-container").addClass("d-none");
                 $("#customer-select").prop("disabled", false);
                 $("#family-select").prop("required", false);
-                $("#family-select").html('<option value="">--- select --- </option>');
             } else {
                 $("#customer-select").prop("disabled", true);
                 $("#siblings-container").removeClass("d-none");
@@ -132,6 +142,7 @@
         $("#family-select").on("change", function(event) {
             const selectedMembers = $(this).val();
             const selectedMembersCount = selectedMembers.length;
+            $("#total-members-span").text(selectedMembersCount);
 
             if (selectedMembersCount > 0) {
                 const total = totalAmount();

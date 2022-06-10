@@ -3,23 +3,24 @@
 <div class="row mt-4 justify-content-center">
     <div class="col-md-4">
         <div class="card card-body">
-            <h4 class="text-center text-success"><i>Add New Item</i></h4>
-            <hr>
+            <h2 class="h3 mb-4">{{ __('labels.add_item_code') }}</h2>
             <form action="{{route('items.store')}}" method="POST">
                 @csrf
                 <div class="form-group mb-3">
-                    <label for="">Title</label>
-                    <input type="text" class="form-control" name="title" placeholder="Member_fee-2020">
+                    <label for="">{{ __('labels.title') }}</label>
+                    <input type="text" class="form-control" name="title">
                 </div>
                 <div class="form-group mb-3">
-                    <label for="">Year</label>
-                    <input type="number" name="year" class="form-control" min="1900" max="2099" step="1" value="2016" />
+                    <label for="">{{ __('labels.year') }}</label>
+                    <input type="number" name="year" class="form-control" min="1900" max="2099" step="1" />
                 </div>
                 <div class="form-group mb-3">
-                    <label for="">Amount</label>
+                    <label for="">{{ __('labels.amount_u') }}</label>
                     <input type="text" class="form-control" name="amount">
                 </div>
-                <button type="submit" class="btn btn-success mt-2 text-white">save</button>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="submit" class="btn btn-primary btn-lg mt-2 text-white">{{ __('labels.save_item_code') }}</button>
+                </div>
             </form>
         </div>
     </div>
