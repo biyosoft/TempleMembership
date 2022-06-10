@@ -100,7 +100,7 @@ class paymentController extends Controller
                 $member->save();
             }
 
-            return redirect()->route('payments.index')->with('success', 'Payment has been created successfully');
+            return redirect()->route('payments.index')->with('success', __('messages.payment_created_successfully'));
         }
 
         foreach ($input["household_ids"] as $key => $member_id) {
@@ -142,7 +142,10 @@ class paymentController extends Controller
             }
         }
 
-        return redirect()->route('payments.index')->with('success', 'Payment has been created successfully');
+        if (count($input["household_ids"]) > 1) {
+            return redirect()->route('payments.index')->with('success', __('messages.payments_created_successfully'));
+        }
+        return redirect()->route('payments.index')->with('success', __('messages.payment_created_successfully'));
     }
 
     /**
@@ -196,7 +199,7 @@ class paymentController extends Controller
         // delete payment
         $payment->delete();
 
-        return redirect()->route('payments.index')->with('success', 'Payment Deleted');
+        return redirect()->route('payments.index')->with('success', __('messages.payment_deleted_successfully'));
     }
 
     public function member_payments($id)

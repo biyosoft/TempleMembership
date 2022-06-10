@@ -3,25 +3,24 @@
 <div class="row justify-content-center mt-5">
     <div class="col-md-10">
         <div class="card card-body">
-            <h4 class="text-center text-info"><i>Add New Payment Here</i></h4>
-            <hr>
+            <h2 class="h3 mb-4">{{ __('labels.add_payment') }}</h2>
             <form action="{{route('payments.store')}}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="customer-select">Select Customer</label>
+                            <label for="customer-select">{{ __('labels.select_customer') }}</label>
                             <select class="form-control select2" name="member_id" id="customer-select" required>
                                 <option value=""></option>
                                 @foreach($memberships as $member)
-                                <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} - {{$member->gvBrowseAttention}} ({{$member->gvBrowseCode}})</option>
+                                <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} ({{$member->gvBrowseUDF_NOAHLISKMC}})</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="household-select">Select Household</label>
+                            <label for="household-select">{{ __('labels.select_household') }}</label>
                             <select id="household-select" class="form-control select2">
                                 <option value=""></option>
                                 @foreach($households as $household)
@@ -34,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label for="item-select">Item Code</label>
+                            <label for="item-select">{{ __('labels.item_code') }}</label>
                             <select multiple="multiple" class="form-control select2-multiple" name="item_code_ids[]" id="item-select" required>
                                 <option value=""> --- select --- </option>
                                 @foreach($items as $item)
@@ -45,7 +44,7 @@
                     </div>
                     <div class="col-md-6 d-none" id="siblings-container">
                         <div class="form-group mb-3">
-                            <label for="family-select">Select Members</label>
+                            <label for="family-select">{{ __('labels.select_members') }}</label>
                             <select multiple="multiple" class="form-control select2-multiple" name="household_ids[]" id="family-select">
                                 <option value=""> --- select --- </option>
                             </select>
@@ -54,7 +53,7 @@
                 </div>
                 <input name="amount" class="form-control" readonly id="amount-input" required hidden />
                 <div class="d-flex justify-content-between align-items-center">
-                    <button class="btn btn-info d-inline-block" type="submit">Save Payment</button>
+                    <button class="btn btn-info d-inline-block" type="submit">{{ __('labels.save') }}</button>
                     <span class="fs-3">RM<span class="fs-3" id="amount-span">0</span></span>
                 </div>
             </form>
@@ -122,7 +121,7 @@
                 if (siblings.length > 0) {
                     let html = ``;
                     $.each(siblings, function(index, sibling) {
-                        html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} - ${sibling.gvBrowseAttention} ( ${sibling.gvBrowseCode} )</option>`;
+                        html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} (${sibling.gvBrowseUDF_NOAHLISKMC})</option>`;
                     });
                     $('#family-select').html(html);
                     $("#family-select").prop("required", true);

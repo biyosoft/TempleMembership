@@ -156,106 +156,105 @@ final class membershipTable extends PowerGridComponent
     {
         return [
             Column::add()
-                ->title('Action')
+                ->title(__('labels.action'))
                 ->field('action'),
             Column::add()
                 ->title('ID')
                 ->field('id')
                 ->makeInputRange(),
-
             Column::add()
-                ->title('CODE')
+                ->title(__('labels.member_skmc_no'))
+                ->field('gvBrowseUDF_NOAHLISKMC')
+                ->sortable()
+                ->searchable()
+                ->makeInputText(),
+            Column::add()
+                ->title(__('labels.code'))
                 ->field('gvBrowseCode')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
-
             Column::add()
-                ->title('Company Name')
+                ->title(__('labels.member_name'))
                 ->field('gvBrowseCompanyName')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('Keluarga')
+                ->title(__('labels.head_of_family'))
                 ->field('gvBrowseAttention')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('TEMPAT LAHIR')
+                ->title(__('labels.birthplace'))
                 ->field('gvBrowseUDF_TEMPATLAHIR')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('IC NO')
+                ->title(__('labels.ic_no'))
                 ->field('gvBrowseUDF_ICNO')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('PHONE 1')
+                ->title(__('labels.phone'))
                 ->field('gvBrowsePhone1')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('ADDRESS 1')
+                ->title(__('labels.address'))
                 ->field('gvBrowseAddress1')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('AREA')
+                ->title(__('labels.area'))
                 ->field('gvBrowseArea')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('DOB')
+                ->title(__('labels.dob'))
                 ->field('gvBrowseUDF_DOB')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
-            Column::add()
-                ->title('NO AHLI SKMC')
-                ->field('gvBrowseUDF_NOAHLISKMC')
-                ->sortable()
-                ->searchable()
-                ->makeInputText(),
+
 
             Column::add()
-                ->title('TARIKH MEMOHON')
+                ->title(__('labels.date_of_application'))
                 ->field('gvBrowseUDF_TARIKHMEMOHON')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('PEKERJAAN')
+                ->title(__('labels.work'))
                 ->field('gvBrowseUDF_PEKERJAAN')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('JANTINA')
+                ->title(__('labels.gender'))
                 ->field('gvBrowseUDF_JANTINA')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
             Column::add()
-                ->title('Last Payment')
+                ->title(__('labels.last_payment_year'))
                 ->field('item_id')
                 ->makeInputRange(),
 

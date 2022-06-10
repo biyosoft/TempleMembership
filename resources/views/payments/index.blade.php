@@ -3,19 +3,25 @@
 <div class="mt-4">
     <div class="card">
         <div class="card-header">
-            <h4>Payments</h4>
+            <h4>{{ __('labels.payments') }}</h4>
         </div>
         <div class="card-body">
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ __('labels.success') }}!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
             <div class="table-responsive">
                 <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-light">
                         <tr>
                             <th class="border-0 rounded-start">#</th>
-                            <th class="border-0">ACTION</th>
-                            <th class="border-0">Member</th>
-                            <th class="border-0">Date</th>
-                            <th class="border-0">Amount</th>
-                            <th class="border-0">Admin Name</th>
+                            <th class="border-0">{{ __('labels.action') }}</th>
+                            <th class="border-0">{{ __('labels.member') }}</th>
+                            <th class="border-0">{{ __('labels.date') }}</th>
+                            <th class="border-0">{{ __('labels.amount') }}</th>
+                            <th class="border-0">{{ __('labels.admin_name') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,9 +37,9 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Print Receipt</a>
+                                        <a class="dropdown-item" href="#">{{ __('labels.print_receipt') }}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); const sure = confirm('Sure to delete'); if(sure) document.getElementById('delete-form').submit();">Delete</a>
+                                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); const sure = confirm('Sure to delete'); if(sure) document.getElementById('delete-form').submit();">{{ __('labels.delete') }}</a>
                                         <form id="delete-form" action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="d-none">
                                             @csrf
                                             <input type="hidden" name="_method" value="delete" />
@@ -42,10 +48,10 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }} ({{$payment->member->gvBrowseCode}})</div>
+                                <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }} ({{$payment->member->gvBrowseUDF_NOAHLISKMC}})</div>
                                 @foreach($payment->paymentDetails as $paymentDetails)
                                 <div>
-                                    <b>Item:</b> {{$paymentDetails->parentItem->title}}<br><b>Amount:</b> @convert($paymentDetails->amount)
+                                    <b>{{ __('labels.item') }}:</b> {{$paymentDetails->parentItem->title}}<br><b>{{ __('labels.amount') }}:</b> @convert($paymentDetails->amount)
                                 </div>
                                 @endforeach
                             </td>

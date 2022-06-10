@@ -25,9 +25,9 @@ class membersController extends Controller
      */
     public function create()
     {
-        $items = item::all();
-        $members = membership::all();
-        return view('members.add', compact('members', 'items'));
+        $items = item::orderBy('year')->get();
+        $members = membership::orderby('gvBrowseCompanyName')->get();
+        return view('members.create', compact('members', 'items'));
     }
 
     /**
