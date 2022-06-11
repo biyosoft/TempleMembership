@@ -9,49 +9,49 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group mb-4">
-                            <label for="">{{ __('labels.member_name') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.member_name') }}</label>
                             <input type="text" class="form-control " name="gvBrowseCompanyName" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-4">
-                            <label for="">{{ __('labels.head_of_family') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.head_of_family') }}</label>
                             <input type="text" class="form-control" name="gvBrowseAttention" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.member_skmc_no') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.member_skmc_no') }}</label>
                             <input type="text" class="form-control " name="gvBrowseUDF_NOAHLISKMC" readonly value="{{ $no_ahli_skmc }}" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.birthplace') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.birthplace') }}</label>
                             <input type="text" class="form-control  " name="gvBrowseUDF_TEMPATLAHIR" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.ic_no') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.ic_no') }}</label>
                             <input type="text" class="form-control  " name="gvBrowseUDF_ICNO" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.phone') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.phone') }}</label>
                             <input type="text" class="form-control  " name="gvBrowsePhone1" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.address') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.address') }}</label>
                             <input type="text" class="form-control  " name="gvBrowseAddress1" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="Area">{{ __('labels.area') }} <span class="text-danger">*</span></label>
+                            <label for="Area">{{ __('labels.area') }}</label>
                             <select class="form-control" name="area_id" id="" >
                                 <option class="text-center" value="">---select---</option>
                                 @foreach($areas as $area)
@@ -62,25 +62,25 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.dob') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.dob') }}</label>
                             <input type="date" class="form-control  " name="gvBrowseUDF_DOB" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.date_of_application') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.date_of_application') }}</label>
                             <input type="date" class="form-control  " name="gvBrowseUDF_TARIKHMEMOHON" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.work') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.work') }}</label>
                             <input type="text" class="form-control  " name="gvBrowseUDF_PEKERJAAN">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.gender') }} <span class="text-danger">*</span></label>
+                            <label for="">{{ __('labels.gender') }}</label>
                             <select class="form-control  " name="gvBrowseUDF_JANTINA"  >
                                 <option class="text-center" value="">---select---</option>
                                 <option value="LELAKI">LELAKI</option>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">Status <span class="text-danger">*</span></label>
+                            <label for="">Status</label>
                             <select class="form-control  " name="status"  >
                                 <option class="text-center" value="">---select---</option>
                                 <option value="Active">Active</option>
