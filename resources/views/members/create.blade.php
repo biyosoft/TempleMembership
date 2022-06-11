@@ -104,7 +104,7 @@
                             <select class="form-control  @error('item_id') is-invalid @enderror" name="item_id" id="">
                                 <option class="text-center" value="">--- select ---</option>
                                 @foreach($items as $item)
-                                <option value="{{$item->id}}">{{$item->title}} - {{$item->year}}</option>
+                                <option value="{{$item->id}}">{{$item->title}}</option>
                                 @endforeach
                             </select>
                         </div>

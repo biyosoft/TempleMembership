@@ -105,7 +105,7 @@
                             <select class="form-control" name="item_id" id="">
                                 <option class="text-center" value=""></option>
                                 @foreach($items as $item)
-                                <option value="{{$item->id}}" @if($members->item_id == $item->id) selected @endif>{{$item->title}} - {{$item->year}}</option>
+                                <option value="{{$item->id}}" @if($members->item_id == $item->id) selected @endif>{{$item->title}}</option>
                                 @endforeach
                             </select>
                         </div>
