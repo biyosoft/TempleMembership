@@ -11,17 +11,18 @@
                     <thead class="thead-light">
                         <tr>
                             <th class="border-0 rounded-start">#</th>
+                            <th class="border-0">{{ __('labels.receipt_no') }}</th>
                             <th class="border-0">Member</th>
                             <th class="border-0">Date</th>
                             <th class="border-0">Amount</th>
                             <th class="border-0">Admin Name</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($payments as $index => $payment)
                         <tr>
                             <td>{{ $index + 1 }}</td>
+                            <td>{{ $payment->receipt_no }}</td>
                             <td>
                                 <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }} ({{$payment->member->gvBrowseCode}})</div>
                                 @foreach($payment->paymentDetails as $paymentDetails)
@@ -33,9 +34,6 @@
                             <td>{{ $payment->payment_date }}</td>
                             <td>@convert($payment->amount)</td>
                             <td>{{ $payment->admin->name }}</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-github">Print Receipt</a>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -45,4 +45,5 @@ return [
     'title' => 'TITLE',
     'year' => 'YEAR',
     'save_item_code' => 'Save Item Code',
+    'receipt_no' => 'RECEIPT NO',
 ];

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePaymentRequest;
-use App\Models\item;
-use App\Models\membership;
-use App\Models\payment;
-use App\Models\PaymentDetail;
 use Carbon\Carbon;
+use App\Models\item;
+use App\Models\payment;
+use App\Models\membership;
 use Illuminate\Http\Request;
+use App\Models\PaymentDetail;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePaymentRequest;
 
 class paymentController extends Controller
 {
@@ -39,6 +39,7 @@ class paymentController extends Controller
         $memberships = membership::orderBy('gvBrowseCompanyName')->get();
         $households = DB::table("memberships")
             ->select(DB::raw("min(id) id, gvBrowseAttention household"))
+            ->where("deleted_at", "=", null)
             ->groupBy("gvBrowseAttention")
             ->orderBy("gvBrowseAttention")
             ->get();
@@ -61,6 +62,10 @@ class paymentController extends Controller
 
         $timeNow = Carbon::now();
 
+        // generate receipt_id
+        $max_receipt_id = payment::withTrashed()->max('receipt_id');
+        $receipt_id = $max_receipt_id ? $max_receipt_id + 1 : 1;
+
         // check if member_id exists or not
         if (array_key_exists("member_id", $input)) {
             $member = membership::findOrFail($input["member_id"]);
@@ -71,6 +76,7 @@ class paymentController extends Controller
             $payment->payment_date = $timeNow->toDateString();
             $payment->amount = $input["amount"];
             $payment->admin_id = auth()->user()->id;
+            $payment->receipt_id = $receipt_id;
             $payment->save();
 
             $memberItem = $member->item;
@@ -112,6 +118,7 @@ class paymentController extends Controller
             $payment->payment_date = $timeNow->toDateString();
             $payment->amount = $input["amount"] / count($input["household_ids"]);
             $payment->admin_id = auth()->user()->id;
+            $payment->receipt_id = $receipt_id;
             $payment->save();
 
             $memberItem = $member->item;

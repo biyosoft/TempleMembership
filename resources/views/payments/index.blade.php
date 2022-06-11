@@ -18,6 +18,7 @@
                         <tr>
                             <th class="border-0 rounded-start">#</th>
                             <th class="border-0">{{ __('labels.action') }}</th>
+                            <th class="border-0">{{ __('labels.receipt_no') }}</th>
                             <th class="border-0">{{ __('labels.member') }}</th>
                             <th class="border-0">{{ __('labels.date') }}</th>
                             <th class="border-0">{{ __('labels.amount') }}</th>
@@ -47,6 +48,7 @@
                                     </div>
                                 </div>
                             </td>
+                            <td>{{ $payment->receipt_no }}</td>
                             <td>
                                 <div class="mt-1">{{ $payment->member->gvBrowseCompanyName }} ({{$payment->member->gvBrowseUDF_NOAHLISKMC}})</div>
                                 @foreach($payment->paymentDetails as $paymentDetails)
