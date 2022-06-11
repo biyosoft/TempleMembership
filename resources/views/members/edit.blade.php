@@ -11,52 +11,52 @@
                     <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label for="">{{ __('labels.member_name') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseCompanyName}}" name="gvBrowseCompanyName" >
+                            <input type="text" class="form-control" value="{{$members->gvBrowseCompanyName}}" name="gvBrowseCompanyName">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label for="">{{ __('labels.head_of_family') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseAttention}}" name="gvBrowseAttention" >
+                            <input type="text" class="form-control" value="{{$members->gvBrowseAttention}}" name="gvBrowseAttention">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.member_skmc_no') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_NOAHLISKMC}}" name="gvBrowseUDF_NOAHLISKMC" readonly >
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_NOAHLISKMC}}" name="gvBrowseUDF_NOAHLISKMC" readonly>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.birthplace') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_TEMPATLAHIR}}" name="gvBrowseUDF_TEMPATLAHIR" >
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_TEMPATLAHIR}}" name="gvBrowseUDF_TEMPATLAHIR">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.ic_no') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_ICNO}}" name="gvBrowseUDF_ICNO" >
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_ICNO}}" name="gvBrowseUDF_ICNO">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.phone') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowsePhone1}}" name="gvBrowsePhone1" >
+                            <input type="text" class="form-control" value="{{$members->gvBrowsePhone1}}" name="gvBrowsePhone1">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.address') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseAddress1}}" name="gvBrowseAddress1" >
+                            <input type="text" class="form-control" value="{{$members->gvBrowseAddress1}}" name="gvBrowseAddress1">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="Area">{{ __('labels.area') }} <span class="text-danger">*</span></label>
                             <select name="area_id" id="" class="form-control">
-                                <option value="{{$members->area_id}}">{{$members->area_name}}</option>
+                                <option value=""> --- Select --- </option>
                                 @foreach($areas as $area)
-                                    <option value="{{$area->area_id}}">{{$area->area_name}}</option>
+                                <option {{ $members->area_id == $area->area_id ? "selected" : "" }} value="{{$area->area_id}}">{{$area->area_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -64,36 +64,37 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.dob') }} <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_DOB}}" name="gvBrowseUDF_DOB" >
+                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_DOB}}" name="gvBrowseUDF_DOB">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.date_of_application') }} <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_TARIKHMEMOHON}}" name="gvBrowseUDF_TARIKHMEMOHON" >
+                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_TARIKHMEMOHON}}" name="gvBrowseUDF_TARIKHMEMOHON">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.work') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_PEKERJAAN}}" name="gvBrowseUDF_PEKERJAAN" >
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_PEKERJAAN}}" name="gvBrowseUDF_PEKERJAAN">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.gender') }} <span class="text-danger">*</span></label>
-                            <select name="gvBrowseUDF_JANTINA" class="form-control" >
-                                <option value="LELAKI">LELAKI</option>
-                                <option value="PEREMPUAN">PEREMPUAN</option>
+                            <select name="gvBrowseUDF_JANTINA" class="form-control">
+                                <option value=""> --- Select --- </option>
+                                <option {{ $members->gvBrowseUDF_JANTINA == "Lelaki" ? "selected" : "" }} value="Lelaki">LELAKI</option>
+                                <option {{ $members->gvBrowseUDF_JANTINA == "Perempuan" ? "selected" : "" }} value="Perempuan">PEREMPUAN</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">Status <span class="text-danger">*</span></label>
-                            <select class="form-control  " name="status"  >
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
+                            <select class="form-control" name="status">
+                                <option {{ $members->status == "Active" ? "selected" : "" }} value="Active">Active</option>
+                                <option {{ $members->status == "Inactive" ? "selected" : "" }} value="Inactive">Inactive</option>
                             </select>
                         </div>
                     </div>
