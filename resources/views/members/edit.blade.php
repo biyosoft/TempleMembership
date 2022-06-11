@@ -93,6 +93,7 @@
                         <div class="form-group mb-3">
                             <label for="">Status <span class="text-danger">*</span></label>
                             <select class="form-control" name="status">
+                                <option value=""> --- Select --- </option>
                                 <option {{ $members->status == "Active" ? "selected" : "" }} value="Active">Active</option>
                                 <option {{ $members->status == "Inactive" ? "selected" : "" }} value="Inactive">Inactive</option>
                             </select>
