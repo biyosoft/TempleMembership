@@ -52,7 +52,7 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="Area">{{ __('labels.area') }} <span class="text-danger">*</span></label>
-                            <select class="form-control select2" name="gvBrowseArea" id="" required>
+                            <select class="form-control" name="area_id" id="" required>
                                 <option class="text-center" value="">---select---</option>
                                 @foreach($areas as $area)
                                  <option class="text-center" value="{{$area->id}}">{{$area->area_name}}</option>

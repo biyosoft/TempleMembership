@@ -52,7 +52,7 @@ class membersController extends Controller
         $members->gvBrowseUDF_ICNO = $request->input('gvBrowseUDF_ICNO');
         $members->gvBrowsePhone1 = $request->input('gvBrowsePhone1');
         $members->gvBrowseAddress1 = $request->input('gvBrowseAddress1');
-        $members->gvBrowseArea = $request->input('gvBrowseArea');
+        $members->area_id = $request->input('area_id');
         $members->gvBrowseUDF_DOB = $request->input('gvBrowseUDF_DOB');
         $members->gvBrowseUDF_NOAHLISKMC = $request->input('gvBrowseUDF_NOAHLISKMC');
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
@@ -106,7 +106,7 @@ class membersController extends Controller
         $members->gvBrowseUDF_ICNO = $request->input('gvBrowseUDF_ICNO');
         $members->gvBrowsePhone1 = $request->input('gvBrowsePhone1');
         $members->gvBrowseAddress1 = $request->input('gvBrowseAddress1');
-        $members->gvBrowseArea = $request->input('gvBrowseArea');
+        $members->area_id = $request->input('area_id');
         $members->gvBrowseUDF_DOB = $request->input('gvBrowseUDF_DOB');
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
