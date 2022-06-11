@@ -30,7 +30,7 @@ class UpdateMembershipRequest extends FormRequest
             'gvBrowseUDF_ICNO' => 'required|string|max:255',
             'gvBrowsePhone1' => 'required|string|max:255',
             'gvBrowseAddress1' => 'required|string|max:255',
-            'gvBrowseArea' => 'required|string|max:255',
+            'area_id' => 'required|integer',
             'gvBrowseUDF_DOB' => 'required|date',
             'gvBrowseUDF_TARIKHMEMOHON' => 'required|date',
             'gvBrowseUDF_PEKERJAAN' => 'required|string|max:255',

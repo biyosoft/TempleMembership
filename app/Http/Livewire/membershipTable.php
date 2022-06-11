@@ -130,8 +130,7 @@ final class membershipTable extends PowerGridComponent
             ->addColumn('gvBrowseUDF_JANTINA')
             ->addColumn('status')
             ->addColumn('item_id', function (membership $model) {
-                return (!empty($model->item) ? $model->item->title   : 'Null') . "-" .
-                    (!empty($model->item) ? $model->item->year   : 'Null');
+                return (!empty($model->item) ? $model->item->title   : 'Null');
             })
             ->addColumn('created_at_formatted', function (membership $model) {
                 return Carbon::parse($model->created_at)->format('d/m/Y H:i:s');
