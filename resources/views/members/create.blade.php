@@ -83,8 +83,8 @@
                             <label for="">{{ __('labels.gender') }} <span class="text-danger">*</span></label>
                             <select class="form-control  @error('gvBrowseUDF_JANTINA') is-invalid @enderror" name="gvBrowseUDF_JANTINA"  required>
                                 <option class="text-center" value="">---select---</option>
-                                <option value="Lelaki">Lelaki</option>
-                                <option value="Perempuan">Perempuan</option>
+                                <option value="LELAKI">LELAKI</option>
+                                <option value="PEREMPUAN">PEREMPUAN</option>
                             </select>
                         </div>
                     </div>
