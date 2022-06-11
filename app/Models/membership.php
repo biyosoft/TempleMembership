@@ -19,17 +19,23 @@ class membership extends Model
         'gvBrowseUDF_ICNO',
         'gvBrowsePhone1',
         'gvBrowseAddress1',
-        'gvBrowseArea',
+        'area_id',
         'gvBrowseUDF_DOB',
         'gvBrowseUDF_NOAHLISKMC',
         'gvBrowseUDF_TARIKHMEMOHON',
         'gvBrowseUDF_PEKERJAAN',
         'gvBrowseUDF_JANTINA',
+        'status',
         'item_id',
+        
     ];
     public function item()
     {
         return $this->belongsTo(item::class);
+    }
+    public function area()
+    {
+        return $this->belongsTo(area::class);
     }
     public function payments()
     {

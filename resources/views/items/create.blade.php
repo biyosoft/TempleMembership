@@ -7,16 +7,16 @@
             <form action="{{route('items.store')}}" method="POST">
                 @csrf
                 <div class="form-group mb-3">
-                    <label for="">{{ __('labels.title') }}</label>
-                    <input type="text" class="form-control" name="title">
+                    <label for="">{{ __('labels.title') }} <span class="text-danger">*</span> </label>
+                    <input type="text" class="form-control" name="title" required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="">{{ __('labels.year') }}</label>
-                    <input type="number" name="year" class="form-control" min="1900" max="2099" step="1" />
+                    <label for="">{{ __('labels.year') }} <span class="text-danger">*</span></label>
+                    <input type="number" name="year" class="form-control" min="1900" max="2099" step="1" required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="">{{ __('labels.amount_u') }}</label>
-                    <input type="text" class="form-control" name="amount">
+                    <label for="">{{ __('labels.amount_u') }} <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="amount" required>
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                     <button type="submit" class="btn btn-primary btn-lg mt-2 text-white">{{ __('labels.save_item_code') }}</button>

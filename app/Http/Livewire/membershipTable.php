@@ -120,12 +120,15 @@ final class membershipTable extends PowerGridComponent
             ->addColumn('gvBrowseUDF_ICNO')
             ->addColumn('gvBrowsePhone1')
             ->addColumn('gvBrowseAddress1')
-            ->addColumn('gvBrowseArea')
+            ->addColumn('area_id', function (membership $model) {
+                return (!empty($model->area) ? $model->area->area_name   : 'Null');
+            })
             ->addColumn('gvBrowseUDF_DOB')
             ->addColumn('gvBrowseUDF_NOAHLISKMC')
             ->addColumn('gvBrowseUDF_TARIKHMEMOHON')
             ->addColumn('gvBrowseUDF_PEKERJAAN')
             ->addColumn('gvBrowseUDF_JANTINA')
+            ->addColumn('status')
             ->addColumn('item_id', function (membership $model) {
                 return (!empty($model->item) ? $model->item->title   : 'Null') . "-" .
                     (!empty($model->item) ? $model->item->year   : 'Null');
@@ -218,7 +221,7 @@ final class membershipTable extends PowerGridComponent
 
             Column::add()
                 ->title(__('labels.area'))
-                ->field('gvBrowseArea')
+                ->field('area_id')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
@@ -252,6 +255,13 @@ final class membershipTable extends PowerGridComponent
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
+
+            Column::add()
+            ->title('Status')
+            ->field('status')
+            ->sortable()
+            ->searchable()
+            ->makeInputText(),
 
             Column::add()
                 ->title(__('labels.last_payment_year'))

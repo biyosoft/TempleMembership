@@ -46,4 +46,6 @@ return [
     'year' => 'YEAR',
     'save_item_code' => 'Save Item Code',
     'receipt_no' => 'RECEIPT NO',
+    'add_area' => 'Add  Area',
+    'save_new_area' => 'Save Area',
 ];
