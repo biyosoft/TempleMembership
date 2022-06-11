@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\areaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\itemController;
 use App\Http\Controllers\membersController;
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
         Route::get("/home", "index")->name("home");
     });
     Route::resource("items", itemController::class);
+    Route::resource("areas" , areaController::class);
     Route::resource('members', membersController::class);
     Route::resource("payments", paymentController::class);
     Route::group(['prefix' => 'payments'], function () {

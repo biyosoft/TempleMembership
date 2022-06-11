@@ -45,4 +45,6 @@ return [
     'title' => 'TITLE',
     'year' => 'YEAR',
     'save_item_code' => 'Save Item Code',
+    'add_area' => 'Add  Area',
+    'save_new_area' => 'Save Area',
 ];

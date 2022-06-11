@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMembershipRequest;
 use App\Http\Requests\UpdateMembershipRequest;
+use App\Models\area;
 use App\Models\membership;
 use App\Models\item;
 use Illuminate\Http\Request;
@@ -27,10 +28,11 @@ class membersController extends Controller
      */
     public function create()
     {
+        $areas = area::orderBy('area_name')->get();
         $items = item::orderBy('year')->get();
         $members = membership::orderby('gvBrowseCompanyName')->get();
         $no_ahli_skmc = membership::max('gvBrowseUDF_NOAHLISKMC') + 1;
-        return view('members.create', compact('members', 'items', 'no_ahli_skmc'));
+        return view('members.create', compact('members', 'items', 'no_ahli_skmc','areas'));
     }
 
     /**
@@ -56,6 +58,7 @@ class membersController extends Controller
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');
+        $members->status = $request->input('status');
         $members->item_id = $request->input('item_id');
         $members->save();
         return redirect()->route('members.index')->with('success', __('messages.membership_created_successfully'));
@@ -80,9 +83,11 @@ class membersController extends Controller
      */
     public function edit($id)
     {
+        $areas = area::orderBy('area_name')->get();
+
         $members = membership::find($id);
         $items = item::all();
-        return view('members.edit', compact('members', 'items'));
+        return view('members.edit', compact('members', 'items','areas'));
     }
 
     /**
@@ -106,6 +111,7 @@ class membersController extends Controller
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');
+        $members->status = $request->input('status');
         $members->item_id = $request->input('item_id');
         $members->save();
         return redirect()->route('members.index')->with('success', __('messages.membership_updated_successfully'));

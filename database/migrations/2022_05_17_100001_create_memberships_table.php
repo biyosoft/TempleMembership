@@ -22,12 +22,12 @@ class CreateMembershipsTable extends Migration
             $table->string('gvBrowseUDF_ICNO');
             $table->string('gvBrowsePhone1');
             $table->string('gvBrowseAddress1');
-            $table->string('gvBrowseArea');
             $table->date('gvBrowseUDF_DOB');
             $table->string('gvBrowseUDF_NOAHLISKMC');
             $table->date('gvBrowseUDF_TARIKHMEMOHON');
             $table->string('gvBrowseUDF_PEKERJAAN')->nullable();
             $table->string('gvBrowseUDF_JANTINA')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
