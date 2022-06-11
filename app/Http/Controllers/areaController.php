@@ -42,7 +42,7 @@ class areaController extends Controller
         $areas->area_name = $request->input('area_name');
         $areas->save();
 
-        return redirect()->route('areas.create')->with('success','Area Has Been Created Succesfully');
+        return redirect()->route('areas.index')->with('success','Area Has Been Created Succesfully');
     }
 
     /**
