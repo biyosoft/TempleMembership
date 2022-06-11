@@ -24,18 +24,18 @@ class StoreMembershipRequest extends FormRequest
     public function rules()
     {
         return [
-            'gvBrowseCompanyName' => 'required|string|max:255',
-            'gvBrowseAttention' => 'required|string|max:255',
-            'gvBrowseUDF_NOAHLISKMC' => 'required|numeric',
-            'gvBrowseUDF_TEMPATLAHIR' => 'required|string|max:255',
-            'gvBrowseUDF_ICNO' => 'required|string|max:255',
-            'gvBrowsePhone1' => 'required|string|max:255',
-            'gvBrowseAddress1' => 'required|string|max:255',
-            'area_id' => 'integer|required',
-            'gvBrowseUDF_DOB' => 'required|date',
-            'gvBrowseUDF_TARIKHMEMOHON' => 'required|date',
-            'gvBrowseUDF_PEKERJAAN' => 'required|string|max:255',
-            'gvBrowseUDF_JANTINA' => 'required|string|max:255',
+            // 'gvBrowseCompanyName' => 'required|string|max:255',
+            // 'gvBrowseAttention' => 'required|string|max:255',
+            // 'gvBrowseUDF_NOAHLISKMC' => 'required|numeric',
+            // 'gvBrowseUDF_TEMPATLAHIR' => 'required|string|max:255',
+            // 'gvBrowseUDF_ICNO' => 'required|string|max:255',
+            // 'gvBrowsePhone1' => 'required|string|max:255',
+            // 'gvBrowseAddress1' => 'required|string|max:255',
+            // 'area_id' => 'integer|required',
+            // 'gvBrowseUDF_DOB' => 'required|date',
+            // 'gvBrowseUDF_TARIKHMEMOHON' => 'required|date',
+            // 'gvBrowseUDF_PEKERJAAN' => 'required|string|max:255',
+            // 'gvBrowseUDF_JANTINA' => 'required|string|max:255',
         ];
     }
 }
