@@ -56,7 +56,7 @@
                             <select name="area_id" id="" class="form-control">
                                 <option value=""> --- Select --- </option>
                                 @foreach($areas as $area)
-                                <option {{ $members->area_id == $area->area_id ? "selected" : "" }} value="{{$area->area_id}}">{{$area->area_name}}</option>
+                                <option {{ $members->area_id == $area->id ? "selected" : "" }} value="{{$area->id}}">{{$area->area_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -84,8 +84,8 @@
                             <label for="">{{ __('labels.gender') }} <span class="text-danger">*</span></label>
                             <select name="gvBrowseUDF_JANTINA" class="form-control">
                                 <option value=""> --- Select --- </option>
-                                <option {{ $members->gvBrowseUDF_JANTINA == "Lelaki" ? "selected" : "" }} value="Lelaki">LELAKI</option>
-                                <option {{ $members->gvBrowseUDF_JANTINA == "Perempuan" ? "selected" : "" }} value="Perempuan">PEREMPUAN</option>
+                                <option {{ $members->gvBrowseUDF_JANTINA == "LELAKI" ? "selected" : "" }} value="LELAKI">LELAKI</option>
+                                <option {{ $members->gvBrowseUDF_JANTINA == "PEREMPUAN" ? "selected" : "" }} value="PEREMPUAN">PEREMPUAN</option>
                             </select>
                         </div>
                     </div>
