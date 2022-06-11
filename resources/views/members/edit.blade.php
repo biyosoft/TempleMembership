@@ -11,52 +11,52 @@
                     <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label for="">{{ __('labels.member_name') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseCompanyName}}" name="gvBrowseCompanyName" required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseCompanyName}}" name="gvBrowseCompanyName" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label for="">{{ __('labels.head_of_family') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseAttention}}" name="gvBrowseAttention" required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseAttention}}" name="gvBrowseAttention" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.member_skmc_no') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_NOAHLISKMC}}" name="gvBrowseUDF_NOAHLISKMC" readonly required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_NOAHLISKMC}}" name="gvBrowseUDF_NOAHLISKMC" readonly >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.birthplace') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_TEMPATLAHIR}}" name="gvBrowseUDF_TEMPATLAHIR" required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_TEMPATLAHIR}}" name="gvBrowseUDF_TEMPATLAHIR" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.ic_no') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_ICNO}}" name="gvBrowseUDF_ICNO" required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_ICNO}}" name="gvBrowseUDF_ICNO" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.phone') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowsePhone1}}" name="gvBrowsePhone1" required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowsePhone1}}" name="gvBrowsePhone1" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.address') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseAddress1}}" name="gvBrowseAddress1" required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseAddress1}}" name="gvBrowseAddress1" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="Area">{{ __('labels.area') }} <span class="text-danger">*</span></label>
-                            <select name="gvBrowseArea" id="" class="form-control">
-                                <option value="{{$members->gvBrowseArea}}">{{$members->gvBrowseArea}}</option>
+                            <select name="area_id" id="" class="form-control">
+                                <option value="{{$members->area_id}}">{{$members->area_name}}</option>
                                 @foreach($areas as $area)
-                                    <option value="{{$area->area_name}}">{{$area->area_name}}</option>
+                                    <option value="{{$area->area_id}}">{{$area->area_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -64,26 +64,25 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.dob') }} <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_DOB}}" name="gvBrowseUDF_DOB" required>
+                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_DOB}}" name="gvBrowseUDF_DOB" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.date_of_application') }} <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_TARIKHMEMOHON}}" name="gvBrowseUDF_TARIKHMEMOHON" required>
+                            <input type="date" class="form-control" value="{{$members->gvBrowseUDF_TARIKHMEMOHON}}" name="gvBrowseUDF_TARIKHMEMOHON" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.work') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_PEKERJAAN}}" name="gvBrowseUDF_PEKERJAAN" required>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_PEKERJAAN}}" name="gvBrowseUDF_PEKERJAAN" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.gender') }} <span class="text-danger">*</span></label>
-                            <select name="gvBrowseUDF_JANTINA" class="form-control" required>
-                                <option value="">{{$members->gvBrowseUDF_JANTINA}}</option>
+                            <select name="gvBrowseUDF_JANTINA" class="form-control" >
                                 <option value="LELAKI">LELAKI</option>
                                 <option value="PEREMPUAN">PEREMPUAN</option>
                             </select>
@@ -92,8 +91,7 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">Status <span class="text-danger">*</span></label>
-                            <select class="form-control  @error('status') is-invalid @enderror" name="status"  required>
-                                <option class="text-center" value="">{{$members->status}}</option>
+                            <select class="form-control  " name="status"  >
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                             </select>

@@ -10,49 +10,49 @@
                     <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label for="">{{ __('labels.member_name') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('gvBrowseCompanyName') is-invalid @enderror" name="gvBrowseCompanyName" required>
+                            <input type="text" class="form-control " name="gvBrowseCompanyName" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label for="">{{ __('labels.head_of_family') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('gvBrowseAttention') is-invalid @enderror" name="gvBrowseAttention" required>
+                            <input type="text" class="form-control" name="gvBrowseAttention" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.member_skmc_no') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('gvBrowseUDF_NOAHLISKMC') is-invalid @enderror" name="gvBrowseUDF_NOAHLISKMC" readonly value="{{ $no_ahli_skmc }}" required>
+                            <input type="text" class="form-control " name="gvBrowseUDF_NOAHLISKMC" readonly value="{{ $no_ahli_skmc }}" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.birthplace') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control  @error('gvBrowseUDF_TEMPATLAHIR') is-invalid @enderror" name="gvBrowseUDF_TEMPATLAHIR" required>
+                            <input type="text" class="form-control  " name="gvBrowseUDF_TEMPATLAHIR" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.ic_no') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control  @error('gvBrowseUDF_ICNO') is-invalid @enderror" name="gvBrowseUDF_ICNO" required>
+                            <input type="text" class="form-control  " name="gvBrowseUDF_ICNO" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.phone') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control  @error('gvBrowsePhone1') is-invalid @enderror" name="gvBrowsePhone1" required>
+                            <input type="text" class="form-control  " name="gvBrowsePhone1" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.address') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control  @error('gvBrowseAddress1') is-invalid @enderror" name="gvBrowseAddress1" required>
+                            <input type="text" class="form-control  " name="gvBrowseAddress1" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="Area">{{ __('labels.area') }} <span class="text-danger">*</span></label>
-                            <select class="form-control" name="area_id" id="" required>
+                            <select class="form-control" name="area_id" id="" >
                                 <option class="text-center" value="">---select---</option>
                                 @foreach($areas as $area)
                                  <option class="text-center" value="{{$area->id}}">{{$area->area_name}}</option>
@@ -63,25 +63,25 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.dob') }} <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control  @error('gvBrowseUDF_DOB') is-invalid @enderror" name="gvBrowseUDF_DOB" required>
+                            <input type="date" class="form-control  " name="gvBrowseUDF_DOB" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.date_of_application') }} <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control  @error('gvBrowseUDF_TARIKHMEMOHON') is-invalid @enderror" name="gvBrowseUDF_TARIKHMEMOHON" required>
+                            <input type="date" class="form-control  " name="gvBrowseUDF_TARIKHMEMOHON" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.work') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control  @error('gvBrowseUDF_PEKERJAAN') is-invalid @enderror" name="gvBrowseUDF_PEKERJAAN">
+                            <input type="text" class="form-control  " name="gvBrowseUDF_PEKERJAAN">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.gender') }} <span class="text-danger">*</span></label>
-                            <select class="form-control  @error('gvBrowseUDF_JANTINA') is-invalid @enderror" name="gvBrowseUDF_JANTINA"  required>
+                            <select class="form-control  " name="gvBrowseUDF_JANTINA"  >
                                 <option class="text-center" value="">---select---</option>
                                 <option value="LELAKI">LELAKI</option>
                                 <option value="PEREMPUAN">PEREMPUAN</option>
@@ -91,7 +91,7 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">Status <span class="text-danger">*</span></label>
-                            <select class="form-control  @error('status') is-invalid @enderror" name="status"  required>
+                            <select class="form-control  " name="status"  >
                                 <option class="text-center" value="">---select---</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
@@ -101,7 +101,7 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.last_payment_year') }} </label>
-                            <select class="form-control  @error('item_id') is-invalid @enderror" name="item_id" id="">
+                            <select class="form-control  " name="item_id" id="">
                                 <option class="text-center" value="">--- select ---</option>
                                 @foreach($items as $item)
                                 <option value="{{$item->id}}">{{$item->title}}</option>
