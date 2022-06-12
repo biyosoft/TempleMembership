@@ -36,7 +36,7 @@
     <div class="col-12 col-sm-4 mb-4">
         <div class="card border-0 shadow">
             <div class="card-header">
-                <h4>Customer Per Year for 5 Years</h4>
+                <h4 class="h5">Customer Per Year for 5 Years</h4>
             </div>
             <div class="card-body">
                 @foreach($members_per_year as $index => $member_per_year)
@@ -58,7 +58,7 @@
     <div class="col-12 col-sm-4 mb-4">
         <div class="card border-0 shadow">
             <div class="card-header">
-                <h4>Payments for Last 5 Years</h4>
+                <h4 class="h5">Payments for Last 5 Years</h4>
             </div>
             <div class="card-body">
                 @foreach($payments_per_year as $index => $payment_per_year)
