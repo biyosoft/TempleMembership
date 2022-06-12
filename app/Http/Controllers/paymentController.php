@@ -155,9 +155,11 @@ class paymentController extends Controller
         }
 
         if (count($input["household_ids"]) > 1) {
-            return redirect()->route('payments.index')->with('success', __('messages.payments_created_successfully'));
+            return redirect()->route('payments.index')->with('success', __('messages.payments_created_successfully'))
+            ->with('receiptId',$receiptId);
         }
-        return redirect()->route('payments.index',compact('receiptId'))->with('success', __('messages.payment_created_successfully'));
+        return redirect()->route('payments.index')->with('success', __('messages.payment_created_successfully'))
+        ->with('receiptId',$receiptId);
     }
 
     /**
