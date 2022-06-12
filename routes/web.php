@@ -32,4 +32,5 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'payments'], function () {
         Route::get("member_payments/{id}", [paymentController::class, 'member_payments'])->name('payments.member_payments');
     });
+    Route::get('payments/receipt/{id}',[paymentController::class,'receipt'])->name('payments.receipt');
 });
