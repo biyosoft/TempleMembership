@@ -38,7 +38,7 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">{{ __('labels.print_receipt') }}</a>
+                                        <a class="dropdown-item" href="{{route('payments.receipt',$payment->receipt_id)}}">{{ __('labels.print_receipt') }}</a>
                                         <div class="dropdown-divider"></div>
                                         <a href="#" class="dropdown-item" onclick="event.preventDefault(); const sure = confirm('Sure to delete'); if(sure) document.getElementById('delete-form-{{ $payment->id }}').submit();">{{ __('labels.delete') }}</a>
                                         <form id="delete-form-{{ $payment->id }}" action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="d-none">

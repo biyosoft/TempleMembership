@@ -14,9 +14,18 @@
     }
     td{
         padding: 5px !important;
+        font-size: 11px !important;
+        white-space: normal !important;
+
+    }
+    p{
+        font-size: 11px !important;
+    }
+    table{
+        table-layout: fixed;
+        width: 100% !important;
     }
 </style>
-
 </head>
 
 <body>
@@ -54,14 +63,21 @@
                                       <td>会员编号</br>No. Ahli</td>
                                       <td>
                                       @foreach($payments as $payment)
-                                        {{$payment->member_id}},
+                                        {{$payment->member_id}}
+                                        @if( !$loop->last)
+                                        ,
+                                    @endif
                                         @endforeach
                                       </td>
                                       <td>缴费年份</br>Bayaran Tahunan</td>
                                       <td>
                                       @foreach($payment->paymentDetails as $paymentDetails) 
-                {{$paymentDetails->parentItem->title}},
-            @endforeach
+                                        {{$paymentDetails->parentItem->title}}
+                                            @if( !$loop->last)
+                                                ,
+                                            @endif
+                                            
+                                      @endforeach
                                       </td>
                                     </tr>
                                     <tr>
@@ -76,11 +92,12 @@
                                  @endif 
                             @endforeach
                                       <td>总共 (年)</br>Jumlah Tahun</td>
-                                      <td>{{$member_count}}</td>
+                                      <td>
+                                      {{$payment->paymentDetails->count()}}</td>
                                     </tr>
                                     <tr>
                                       <td>家属人数</br>Bilangan Ahli Keluarga</td>
-                                      <td>{{$year_count}}</td>
+                                      <td>{{$member_count}}</td>
                                       <td>总共</br>JUMLAH BAYARAN</td>
                                       <td>RM {{$amount_sum}}</td>
                                     </tr>
@@ -111,30 +128,3 @@
 
 </html>
 
-<!-- <ul>
-    
-      <b> No : </b> <li>{{$payment->receipt_no}}</li>
-       <b>Tarikh :</b>       <li>{{$payment->payment_date}}</li>
-      <b> nama Ketua Keluarga :</b> <li>{{$payment->member->gvBrowseCompanyName}}</li>
-       <b>Kawasan :</b> <li>{{$payment->member->area->area_name}}</li>
-       <b>No Ahli : </b> <li>
-        @foreach($payments as $payment)
-        {{$payment->member_id}},
-        @endforeach
-       </li>
-       
-       <b>Bayaran Tahunan :</b>
-        @foreach($payment->paymentDetails as $paymentDetails) 
-                {{$paymentDetails->parentItem->title}}
-            @endforeach
-       <br>
-
-        <b>Setiap Ahli :</b>  
-            <br>
-      
-    <b>Jumlah Tahun : </b><br>
-    <b>Belangan ahli Keluarga</b> <br>
-    <b>Jumlah Bayaran :</b> RM 
-   
-    
-</ul> -->
