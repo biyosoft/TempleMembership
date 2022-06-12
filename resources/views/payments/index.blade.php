@@ -10,7 +10,7 @@
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>{{ __('labels.success') }}!</strong> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <a class="btn btn-primary" target="_blank" href="{{route('payments.receipt',session('receiptId'))}}">Print Receipt</a>
+                <a class="btn btn-primary btn-xs btn-sm" target="_blank" href="{{route('payments.receipt',session('receiptId'))}}">Print Receipt</a>
             </div>
             @endif
             <div class="table-responsive">
