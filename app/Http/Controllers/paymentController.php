@@ -227,14 +227,7 @@ class paymentController extends Controller
         $payments = payment::where('receipt_id' , $id)->get();  
         $amount_sum = payment::where('receipt_id' , $id)->sum('amount');  
         $member_count = payment::where('receipt_id' , $id)->count('member_id'); 
-        $year_count = DB::table('payments')
-                
-                ->join('payment_details' , 'payments.id' , '=' , 'payment_details.payment_id')
-                ->select('payments.*','payment_details.item_code_id')
-                ->where('receipt_id',$id)
-                ->count('item_code_id')
-                ;
         
-        return view('payments.receipt',compact('payments','amount_sum','member_count','year_count'));
+        return view('payments.receipt',compact('payments','amount_sum','member_count'));
     }
 }
