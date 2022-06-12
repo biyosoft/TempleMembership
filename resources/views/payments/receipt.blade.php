@@ -63,7 +63,7 @@
                                       <td>会员编号</br>No. Ahli</td>
                                       <td>
                                       @foreach($payments as $payment)
-                                        {{$payment->member_id}}
+                                        {{$payment->member->gvBrowseUDF_NOAHLISKMC}}
                                         @if( !$loop->last)
                                         ,
                                     @endif
