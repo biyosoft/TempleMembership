@@ -35,6 +35,7 @@ class paymentController extends Controller
         //
         $member_id = request()->input("member_id");
         $member_id = $member_id ? $member_id : "";
+        
         $items = item::orderBy("year")->get();
         $memberships = membership::orderBy('gvBrowseCompanyName')->get();
         $households = DB::table("memberships")
@@ -43,7 +44,7 @@ class paymentController extends Controller
             ->groupBy("gvBrowseAttention")
             ->orderBy("gvBrowseAttention")
             ->get();
-
+        
         return view('payments.create', compact('items', 'memberships', 'member_id', 'households'));
     }
 
@@ -59,12 +60,13 @@ class paymentController extends Controller
     {
         // validate input
         $input = $request->all();
-
+        
         $timeNow = Carbon::now();
 
         // generate receipt_id
         $max_receipt_id = payment::withTrashed()->max('receipt_id');
         $receipt_id = $max_receipt_id ? $max_receipt_id + 1 : 1;
+        $receiptId = $receipt_id;
 
         // check if member_id exists or not
         if (array_key_exists("member_id", $input)) {
@@ -78,7 +80,8 @@ class paymentController extends Controller
             $payment->admin_id = auth()->user()->id;
             $payment->receipt_id = $receipt_id;
             $payment->save();
-
+            
+            $receiptId = $receipt_id;
             $memberItem = $member->item;
             $memberYear = $memberItem ? $memberItem->year : 0;
 
@@ -106,7 +109,8 @@ class paymentController extends Controller
                 $member->save();
             }
 
-            return redirect()->route('payments.index')->with('success', __('messages.payment_created_successfully'));
+            return redirect()->route('payments.index')->with('success', __('messages.payment_created_successfully'))
+            ->with('receiptId',$receiptId);
         }
 
         foreach ($input["household_ids"] as $key => $member_id) {
@@ -121,6 +125,7 @@ class paymentController extends Controller
             $payment->receipt_id = $receipt_id;
             $payment->save();
 
+            $receiptId = $receipt_id;
             $memberItem = $member->item;
             $memberYear = $memberItem ? $memberItem->year : 0;
 
@@ -152,7 +157,7 @@ class paymentController extends Controller
         if (count($input["household_ids"]) > 1) {
             return redirect()->route('payments.index')->with('success', __('messages.payments_created_successfully'));
         }
-        return redirect()->route('payments.index')->with('success', __('messages.payment_created_successfully'));
+        return redirect()->route('payments.index',compact('receiptId'))->with('success', __('messages.payment_created_successfully'));
     }
 
     /**
@@ -163,7 +168,7 @@ class paymentController extends Controller
      */
     public function show(payment $payment)
     {
-        //
+        
         return view('payments.show', compact('payment'));
     }
 

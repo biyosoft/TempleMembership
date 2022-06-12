@@ -6,10 +6,11 @@
             <h4>{{ __('labels.payments') }}</h4>
         </div>
         <div class="card-body">
-            @if(session('success'))
+            @if(session('success','receiptId'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>{{ __('labels.success') }}!</strong> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <a class="btn btn-primary" target="_blank" href="{{route('payments.receipt',session('receiptId'))}}">Print Receipt</a>
             </div>
             @endif
             <div class="table-responsive">
@@ -38,9 +39,9 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{route('payments.receipt',$payment->receipt_id)}}">{{ __('labels.print_receipt') }}</a>
+                                        <a class="dropdown-item" target="_blank" href="{{route('payments.receipt',$payment->receipt_id)}}">{{ __('labels.print_receipt') }}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); const sure = confirm('Sure to delete'); if(sure) document.getElementById('delete-form-{{ $payment->id }}').submit();">{{ __('labels.delete') }}</a>
+                                        <a href="#"  class="dropdown-item" onclick="event.preventDefault(); const sure = confirm('Sure to delete'); if(sure) document.getElementById('delete-form-{{ $payment->id }}').submit();">{{ __('labels.delete') }}</a>
                                         <form id="delete-form-{{ $payment->id }}" action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="d-none">
                                             @csrf
                                             <input type="hidden" name="_method" value="delete" />
