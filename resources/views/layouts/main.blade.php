@@ -53,7 +53,7 @@
 
 
   <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-    <a class="navbar-brand me-lg-5" href="{{asset('volt-theme/html&css/index.html')}}">
+    <a class="navbar-brand me-lg-5" href="{{ route('home') }}">
       <img class="navbar-brand-dark" src="{{asset('volt-theme/html&css/assets/img/brand/light.svg')}}" alt="Volt logo" /> <img class="navbar-brand-light" src="volt-theme/html&css/assets/img/brand/dark.svg" alt="Volt logo" />
     </a>
     <div class="d-flex align-items-center">
@@ -65,21 +65,7 @@
 
   <nav id="sidebarMenu" class="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
     <div class="sidebar-inner px-4 pt-3">
-      <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
-        <div class="d-flex align-items-center">
-          <div class="avatar-lg me-4">
-            <img src="{{asset('volt-theme/html&css/assets/img/team/profile-picture-3.jpg')}}" class="card-img-top rounded-circle border-white" alt="Bonnie Green">
-          </div>
-          <div class="d-block">
-            <h2 class="h5 mb-3">Hi, Jane</h2>
-            <a href="{{asset('volt-theme/html&css/pages/examples/sign-in.html')}}" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
-              <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-              </svg>
-              Sign Out
-            </a>
-          </div>
-        </div>
+      <div class="user-card d-flex d-md-none align-items-center justify-content-end justify-content-md-center pb-4">
         <div class="collapse-close d-md-none">
           <a href="#sidebarMenu" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true" aria-label="Toggle navigation">
             <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -97,8 +83,6 @@
             <span class="mt-1 ms-1 sidebar-text">Dashboard</span>
           </a>
         </li>
-
-        
 
         <li class="nav-item">
           <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#members-submenu">
@@ -236,8 +220,6 @@
           </div>
         </li>
 
-
-       
         <li class="nav-item">
           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf

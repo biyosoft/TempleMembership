@@ -53,7 +53,7 @@
                         <div class="form-group mb-3">
                             <label for="Area">{{ __('labels.area') }}</label>
                             <select class="form-control" name="area_id" id="" >
-                                <option class="text-center" value="">---select---</option>
+                                <option class="text-center" value=""> --- Select --- </option>
                                 @foreach($areas as $area)
                                  <option class="text-center" value="{{$area->id}}">{{$area->area_name}}</option>
                                 @endforeach
@@ -82,7 +82,7 @@
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.gender') }}</label>
                             <select class="form-control  " name="gvBrowseUDF_JANTINA"  >
-                                <option class="text-center" value="">---select---</option>
+                                <option class="text-center" value=""> --- Select --- </option>
                                 <option value="LELAKI">LELAKI</option>
                                 <option value="PEREMPUAN">PEREMPUAN</option>
                             </select>
@@ -92,7 +92,7 @@
                         <div class="form-group mb-3">
                             <label for="">Status</label>
                             <select class="form-control  " name="status"  >
-                                <option class="text-center" value="">---select---</option>
+                                <option class="text-center" value=""> --- Select --- </option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                             </select>
@@ -102,7 +102,7 @@
                         <div class="form-group mb-3">
                             <label for="">{{ __('labels.last_payment_year') }} </label>
                             <select class="form-control  " name="item_id" id="">
-                                <option class="text-center" value="">--- select ---</option>
+                                <option class="text-center" value=""> --- Select --- </option>
                                 @foreach($items as $item)
                                 <option value="{{$item->id}}">{{$item->title}}</option>
                                 @endforeach

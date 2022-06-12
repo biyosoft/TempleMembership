@@ -35,7 +35,7 @@ class paymentController extends Controller
         //
         $member_id = request()->input("member_id");
         $member_id = $member_id ? $member_id : "";
-        $items = item::orderByDesc("year")->get();
+        $items = item::orderBy("year")->get();
         $memberships = membership::orderBy('gvBrowseCompanyName')->get();
         $households = DB::table("memberships")
             ->select(DB::raw("min(id) id, gvBrowseAttention household"))

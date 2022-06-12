@@ -13,7 +13,7 @@
                             <select class="form-control select2" name="member_id" id="customer-select" required>
                                 <option value=""></option>
                                 @foreach($memberships as $member)
-                                <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} ({{$member->gvBrowseUDF_NOAHLISKMC}})</option>
+                                <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} ({{$member->gvBrowseUDF_NOAHLISKMC}}) - ({{ $member->item->year ?? "" }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -37,7 +37,7 @@
                             <select multiple="multiple" class="form-control select2-multiple" name="item_code_ids[]" id="item-select" required>
                                 <option value=""> --- select --- </option>
                                 @foreach($items as $item)
-                                <option data-amount="{{$item->amount}}" value="{{$item->id}}">{{$item->title}} - {{$item->year}}</option>
+                                <option data-amount="{{$item->amount}}" value="{{$item->id}}">{{$item->title}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -127,11 +127,10 @@
 
                 const selectedMember = members.find(member => member.id == selectedValue);
                 siblings = members.filter(member => member.gvBrowseAttention == selectedMember.gvBrowseAttention);
-
                 if (siblings.length > 0) {
                     let html = ``;
                     $.each(siblings, function(index, sibling) {
-                        html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} (${sibling.gvBrowseUDF_NOAHLISKMC})</option>`;
+                        html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} (${sibling.gvBrowseUDF_NOAHLISKMC}) - (${sibling.item?.year ? sibling.item.year : ""})</option>`;
                     });
                     $('#family-select').html(html);
                     $("#family-select").prop("required", true);

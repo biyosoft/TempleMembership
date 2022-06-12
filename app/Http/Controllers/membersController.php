@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateMembershipRequest;
 use App\Models\area;
 use App\Models\membership;
 use App\Models\item;
-use Illuminate\Http\Request;
 
 class membersController extends Controller
 {
@@ -32,7 +31,7 @@ class membersController extends Controller
         $items = item::orderBy('year')->get();
         $members = membership::orderby('gvBrowseCompanyName')->get();
         $no_ahli_skmc = membership::max('gvBrowseUDF_NOAHLISKMC') + 1;
-        return view('members.create', compact('members', 'items', 'no_ahli_skmc','areas'));
+        return view('members.create', compact('members', 'items', 'no_ahli_skmc', 'areas'));
     }
 
     /**
@@ -86,8 +85,8 @@ class membersController extends Controller
         $areas = area::orderBy('area_name')->get();
 
         $members = membership::find($id);
-        $items = item::all();
-        return view('members.edit', compact('members', 'items','areas'));
+        $items = item::orderBy('year')->get();
+        return view('members.edit', compact('members', 'items', 'areas'));
     }
 
     /**
