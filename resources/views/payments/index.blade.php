@@ -6,7 +6,7 @@
             <h4>{{ __('labels.payments') }}</h4>
         </div>
         <div class="card-body">
-            @if(session('success','receiptId'))
+            @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>{{ __('labels.success') }}!</strong> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
