@@ -139,17 +139,17 @@ class membersController extends Controller
 
     private function generate_code(string $name)
     {
-        $result = membership::where('gvBrowseCode', 'LIKE', $name[0] . '%')->max('gvBrowseCode');
+        $code = "300-";
+        $result = membership::where('gvBrowseCode', 'LIKE', $code . $name[0] . '%')->max('gvBrowseCode');
         if ($result == null) {
-            return $name[0] . '0001';
+            return $code . $name[0] . '0001';
         }
 
 
-        $code_without_letter = substr($result, 1);
+        $code_without_letter = substr($result, 5);
         $number = (int)$code_without_letter;
         $number++;
         $number = str_pad($number, 4, '0', STR_PAD_LEFT);
-        $code = $name[0] . $number;
-        return $code;
+        return $code . $name[0] . $number;
     }
 }
