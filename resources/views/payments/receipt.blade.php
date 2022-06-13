@@ -57,7 +57,7 @@
                                       <td>家属姓名</br>Nama Ketua Keluarga</td>
                                       <td>{{$payment->member->gvBrowseAttention}}</td>
                                       <td>乡区</br>Kawasan</td>
-                                      <td>{{$payment->member->area->area_name}}</td>
+                                      <td>{{$payment->member->area->area_name ? $payment->member->area->area_name : "N/A"}}</td>
                                     </tr>
                                     <tr>
                                       <td>会员编号</br>No. Ahli</td>

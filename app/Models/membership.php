@@ -35,7 +35,7 @@ class membership extends Model
     }
     public function area()
     {
-        return $this->belongsTo(area::class);
+        return $this->belongsTo(area::class)->withDefault();
     }
     public function payments()
     {
