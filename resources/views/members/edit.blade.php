@@ -10,49 +10,49 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group mb-4">
-                            <label for="">{{ __('labels.member_name') }}</label>
+                            <label for="">{{ __('labels.member_name') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowseCompanyName}}" name="gvBrowseCompanyName">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-4">
-                            <label for="">{{ __('labels.head_of_family') }}</label>
+                            <label for="">{{ __('labels.head_of_family') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowseAttention}}" name="gvBrowseAttention">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.member_skmc_no') }}</label>
+                            <label for="">{{ __('labels.member_skmc_no') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowseUDF_NOAHLISKMC}}" name="gvBrowseUDF_NOAHLISKMC" readonly>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.birthplace') }}</label>
+                            <label for="">{{ __('labels.birthplace') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowseUDF_TEMPATLAHIR}}" name="gvBrowseUDF_TEMPATLAHIR">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.ic_no') }}</label>
+                            <label for="">{{ __('labels.ic_no') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowseUDF_ICNO}}" name="gvBrowseUDF_ICNO">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.phone') }}</label>
+                            <label for="">{{ __('labels.phone') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowsePhone1}}" name="gvBrowsePhone1">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.address') }}</label>
+                            <label for="">{{ __('labels.address') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowseAddress1}}" name="gvBrowseAddress1">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="Area">{{ __('labels.area') }}</label>
+                            <label for="Area">{{ __('labels.area') }} <span class="text-danger">*</span></label>
                             <select name="area_id" id="" class="form-control">
                                 <option value=""> --- Select --- </option>
                                 @foreach($areas as $area)
@@ -63,25 +63,25 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.dob') }}</label>
+                            <label for="">{{ __('labels.dob') }} <span class="text-danger">*</span></label>
                             <input type="date" class="form-control" value="{{$members->gvBrowseUDF_DOB}}" name="gvBrowseUDF_DOB">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.date_of_application') }}</label>
+                            <label for="">{{ __('labels.date_of_application') }} <span class="text-danger">*</span></label>
                             <input type="date" class="form-control" value="{{$members->gvBrowseUDF_TARIKHMEMOHON}}" name="gvBrowseUDF_TARIKHMEMOHON">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.work') }}</label>
+                            <label for="">{{ __('labels.work') }} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{$members->gvBrowseUDF_PEKERJAAN}}" name="gvBrowseUDF_PEKERJAAN">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">{{ __('labels.gender') }}</label>
+                            <label for="">{{ __('labels.gender') }} <span class="text-danger">*</span></label>
                             <select name="gvBrowseUDF_JANTINA" class="form-control">
                                 <option value=""> --- Select --- </option>
                                 <option {{ $members->gvBrowseUDF_JANTINA == "LELAKI" ? "selected" : "" }} value="LELAKI">LELAKI</option>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
-                            <label for="">Status</label>
+                            <label for="">Status <span class="text-danger">*</span></label>
                             <select class="form-control" name="status">
                                 <option value=""> --- Select --- </option>
                                 <option {{ $members->status == "Active" ? "selected" : "" }} value="Active">Active</option>
