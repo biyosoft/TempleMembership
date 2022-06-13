@@ -55,7 +55,7 @@
                                     <tr>
                              
                                       <td>家属姓名</br>Nama Ketua Keluarga</td>
-                                      <td>{{$payment->member->gvBrowseCompanyName}}</td>
+                                      <td>{{$payment->member->gvBrowseAttention}}</td>
                                       <td>乡区</br>Kawasan</td>
                                       <td>{{$payment->member->area->area_name}}</td>
                                     </tr>
