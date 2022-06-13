@@ -38,7 +38,7 @@ class payment extends Model
     {
         if ($this->receipt_id == null) return "";
 
-        $payment_year = Carbon::parse($this->payment_date)->format('Y');
+        $payment_year = Carbon::createFromFormat('d/m/Y', $this->payment_date)->format('Y');
 
         $receipt_id = str_pad($this->receipt_id, 5, '0', STR_PAD_LEFT);
 
