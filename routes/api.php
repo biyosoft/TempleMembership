@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("/customers", function () {
     $auth_string = request()->input("auth");
     if ($auth_string === '$2y$10$Wqtzg7YOGlX7MgXMVnubZO7vwAm3Tye5bWbx52ObZwycfegv38xy.') {
-        $members = new Collection(\App\Models\membership::all());
+        $members = new Collection(\App\Models\membership::with("item")->with("area")->get());
         return $members;
     }
     return response()->json(["error" => "unauthorized"], 401);
