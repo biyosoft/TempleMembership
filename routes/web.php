@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get("/", "index")->name("home");
         Route::get("/home", "index")->name("home");
+        Route::get('sync','is_sync')->name('sync');
     });
     Route::resource("items", itemController::class);
     Route::resource("areas" , areaController::class);

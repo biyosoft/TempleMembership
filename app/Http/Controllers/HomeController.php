@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Models\membership;
+use App\Models\sync;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 class HomeController extends Controller
 {
     /**
@@ -23,7 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //Displaying sync based on last value 
+        $sync = sync::all();
+        
+        $is_sync =DB::table('syncs')
+        ->orderBy('id','DESC')
+        ->first();
+
         // Total Members
+    
         $memberships_count = membership::count();
 
         // Total Members per year for last 5 years
@@ -42,6 +51,15 @@ class HomeController extends Controller
             ->limit(5)
             ->get();
 
-        return view('home', compact('memberships_count', 'members_per_year', 'payments_per_year'));
+        return view('home', compact('memberships_count', 'members_per_year', 'payments_per_year','is_sync'));
+    }
+
+    public function is_sync(Request $request){
+        $user_id = Auth::user()->id;
+        $sync = new Sync;
+        $sync->status = 1;
+        $sync->user_id = $user_id;
+        $sync->save();
+        return redirect()->back()->with('success','Synced Request Is Submitted !');
     }
 }

@@ -31,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('convert', function ($value) {
             return "RM<?php echo number_format($value, 0) ?>";
         });
+
     }
 }

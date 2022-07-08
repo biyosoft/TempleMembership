@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+
 <div class="row mt-4">
     <div class="col-12 col-sm-4 mb-4">
         <div class="card border-0 shadow">
@@ -75,6 +76,20 @@
                 @endforeach
             </div>
         </div>
+    </div>
+    <div class="col-12 col-sm-4 mb-4">
+        
+        <div class="card card-body">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ __('labels.success') }}!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+        @endif
+            <form action="{{route('sync')}}">
+            <button type="submit" class="btn btn-primary form-control" @if($is_sync) ? @if($is_sync->status == 1) disabled @endif  @endif>Sync</button>
+            </form>
+        
     </div>
 </div>
 @endsection
