@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::resource("areas" , areaController::class);
     Route::resource('members', membersController::class);
     Route::resource("payments", paymentController::class);
+    Route::get('/export', [paymentController::class, 'export'])->name('payments.export');
+    Route::get('/export_page', [paymentController::class, 'export_page'])->name('payments.export_page');
     Route::group(['prefix' => 'payments'], function () {
         Route::get("member_payments/{id}", [paymentController::class, 'member_payments'])->name('payments.member_payments');
     });

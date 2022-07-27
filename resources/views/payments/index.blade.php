@@ -4,6 +4,7 @@
     <div class="card">
         <div class="card-header">
             <h4>{{ __('labels.payments') }}</h4>
+            <!-- <a href="{{route('payments.export')}}"><button class="btn btn-warning">Export</button></a> -->
         </div>
         <div class="card-body">
             @if(session('success'))

@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Models\PaymentDetail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePaymentRequest;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class paymentController extends Controller
 {
@@ -237,4 +239,69 @@ class paymentController extends Controller
         
         return view('payments.receipt',compact('payments','amount_sum','member_count'));
     }
+
+    public function export_page()
+    {
+        $payments = payment::orderByDesc("id")->paginate(10);
+        return view("payments.export_page", compact("payments"));
+    }
+
+    public function export()
+    {
+        // $test = find_area_by_id(1);
+        // print_r($test);die;
+        $payments = payment::orderByDesc("id")->get();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $table_columns = array("DOCNO(20)", "CODE(10)", "DOCDATE", "TERMS(10)", "DESCRIPTION_HDR(200)", "AREA(10)", "AGENT(10)", "PROJECT_HDR(20)", "CURRENCYRATE", "DOCAMT", "CANCELLED(1)", "SEQ", "PROJECT_DTL(20)", "ACCOUNT(10)", "DESCRIPTION_DTL(200)", "TAX(10)", "TAXAMT", "TAXINCLUSIVE", "AMOUNT", "DOCTYPE");
+
+			$column = 1;
+
+			foreach($table_columns as $field)
+			{
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
+				$spreadsheet->getActiveSheet()->getStyleByColumnAndRow($column, 1)->getFont()->setBold(true);
+				$column++;
+			}
+            $row = 2;
+            // $all_data = array(1, 2, 3);
+            $count = 1;
+			foreach ($payments as $payment) {
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $payment->receipt_no);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(2, $row, '300-'.$payment->member->gvBrowseCompanyName);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(3, $row, $payment->payment_date);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(4, $row, "C.O.D");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(5, $row, "Free");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(6, $row, find_area_by_id($payment->member->area_id));
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(7, $row, "----");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(8, $row, "----");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(9, $row, "1.00");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(10, $row, $payment->amount);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(11, $row, "F");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $count);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(13, $row, "----");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(14, $row, "500-000");
+                foreach ($payment->paymentDetails as $paymentDetails) {
+                    $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(15, $row, "member fee - ".$paymentDetails->parentItem->title);
+                }
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(16, $row, "");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(17, $row, "");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(18, $row, "");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(19, $row, "10");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(20, $row, "1");
+
+				$row++;
+                $count++;
+			}
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Payments' . time() . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $xlsxWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $xlsxWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        exit($xlsxWriter->save('php://output'));
+
+    }
+
 }
