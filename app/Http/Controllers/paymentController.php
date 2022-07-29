@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class paymentController extends Controller
 {
+    public $check;
     /**
      * Display a listing of the resource.
      *
@@ -246,11 +247,15 @@ class paymentController extends Controller
         return view("payments.export_page", compact("payments"));
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        // $test = find_area_by_id(1);
-        // print_r($test);die;
-        $payments = payment::orderByDesc("id")->get();
+        $household_ids = $request->household;
+        $payments = payment::orderBy("items.title", "asc")
+        ->leftJoin('payment_details', 'payments.id', '=', 'payment_details.payment_id')
+        ->leftJoin('items', 'payment_details.item_code_id', '=', 'items.id')
+        ->whereIn('member_id', $household_ids)
+        ->get();
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $table_columns = array("DOCNO(20)", "CODE(10)", "DOCDATE", "TERMS(10)", "DESCRIPTION_HDR(200)", "AREA(10)", "AGENT(10)", "PROJECT_HDR(20)", "CURRENCYRATE", "DOCAMT", "CANCELLED(1)", "SEQ", "PROJECT_DTL(20)", "ACCOUNT(10)", "DESCRIPTION_DTL(200)", "TAX(10)", "TAXAMT", "TAXINCLUSIVE", "AMOUNT", "DOCTYPE");
@@ -266,8 +271,15 @@ class paymentController extends Controller
             $row = 2;
             // $all_data = array(1, 2, 3);
             $count = 1;
+            $SEQ = 0;
 			foreach ($payments as $payment) {
-				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $payment->receipt_no);
+                $year = $payment->title;
+                if ($year != $this->check) {
+                    $SEQ++;
+                }
+                $this->check = $year;
+                
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $payment->receipt_no);
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(2, $row, '300-'.$payment->member->gvBrowseCompanyName);
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(3, $row, $payment->payment_date);
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(4, $row, "C.O.D");
@@ -275,20 +287,23 @@ class paymentController extends Controller
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(6, $row, find_area_by_id($payment->member->area_id));
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(7, $row, "----");
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(8, $row, "----");
-				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(9, $row, "1.00");
-				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(10, $row, $payment->amount);
+                $spreadsheet->getActiveSheet()->getCell("I$row")->setValueExplicit('1.00', \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING2);
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(10, $row, $payment->amount);
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(11, $row, "F");
-				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $count);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $SEQ);
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(13, $row, "----");
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(14, $row, "500-000");
-                foreach ($payment->paymentDetails as $paymentDetails) {
-                    $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(15, $row, "member fee - ".$paymentDetails->parentItem->title);
-                }
+                // foreach ($payment->paymentDetails as $paymentDetails) {
+                    $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(15, $row, "member fee - ".$payment->title);
+                // }
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(16, $row, "");
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(17, $row, "");
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(18, $row, "");
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(19, $row, "10");
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(20, $row, "1");
+                for ($i = 'A'; $i !=  $spreadsheet->getActiveSheet()->getHighestColumn(); $i++) {
+                    $spreadsheet->getActiveSheet()->getColumnDimension($i)->setAutoSize(TRUE);
+                }
 
 				$row++;
                 $count++;
