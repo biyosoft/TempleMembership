@@ -249,12 +249,22 @@ class paymentController extends Controller
 
     public function export(Request $request)
     {
-        $household_ids = $request->household;
-        $payments = payment::orderBy("items.title", "asc")
-        ->leftJoin('payment_details', 'payments.id', '=', 'payment_details.payment_id')
-        ->leftJoin('items', 'payment_details.item_code_id', '=', 'items.id')
-        ->whereIn('member_id', $household_ids)
-        ->get();
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+
+        // echo $from_date.' / '.$to_date;die;
+        if (!empty($from_date) && !empty($to_date)) {
+            $payments = payment::orderBy("items.title", "asc")
+            ->leftJoin('payment_details', 'payments.id', '=', 'payment_details.payment_id')
+            ->leftJoin('items', 'payment_details.item_code_id', '=', 'items.id')
+            ->whereBetween('payment_date', ["$from_date", "$to_date"])
+            ->get();
+        }else{
+            $payments = payment::orderBy("items.title", "asc")
+            ->leftJoin('payment_details', 'payments.id', '=', 'payment_details.payment_id')
+            ->leftJoin('items', 'payment_details.item_code_id', '=', 'items.id')
+            ->get();
+        }
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -280,7 +290,7 @@ class paymentController extends Controller
                 $this->check = $year;
                 
                 $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $payment->receipt_no);
-				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(2, $row, '300-'.$payment->member->gvBrowseCompanyName);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $payment->member->gvBrowseCode);
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(3, $row, $payment->payment_date);
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(4, $row, "C.O.D");
 				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(5, $row, "Free");
