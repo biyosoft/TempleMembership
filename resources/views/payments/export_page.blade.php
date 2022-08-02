@@ -18,11 +18,11 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <b><strong class="h6" style="margin-left: 5px;"> From </strong></b><br>
-                                <input class="form-control" type="date" name="from_date">
+                                <input class="form-control" type="date" name="from_date" required>
                             </div>
                             <div class="col-sm-3">
                                 <b><strong class="h6" style="margin-left: 5px;"> To </strong></b><br>
-                                <input class="form-control" type="date" name="to_date">
+                                <input class="form-control" type="date" name="to_date" required>
                             </div>
                         </div>
                         <br><br>
