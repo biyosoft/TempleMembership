@@ -329,4 +329,92 @@ class paymentController extends Controller
 
     }
 
+    public function export_customer_payment_page()
+    {
+        $payments = payment::orderByDesc("id")->paginate(10);
+        return view("payments.export_customer_payment_page", compact("payments"));
+    }
+
+    public function export_customer_payment(Request $request)
+    {
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+
+        // echo $from_date.' / '.$to_date;die;
+        if (!empty($from_date) && !empty($to_date)) {
+            $payments = payment::orderBy("items.title", "asc")
+            ->leftJoin('payment_details', 'payments.id', '=', 'payment_details.payment_id')
+            ->leftJoin('items', 'payment_details.item_code_id', '=', 'items.id')
+            ->whereBetween('payment_date', ["$from_date", "$to_date"])
+            ->get();
+        }else{
+            $payments = payment::orderBy("items.title", "asc")
+            ->leftJoin('payment_details', 'payments.id', '=', 'payment_details.payment_id')
+            ->leftJoin('items', 'payment_details.item_code_id', '=', 'items.id')
+            ->get();
+        }
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $table_columns = array("DOCNO(20)", "CODE(10)", "DOCDATE", "POSTDATE", "DESCRIPTION(200)", "AREA(10)", "AGENT(10)", "PAYMENTMETHOD(10)", "CHEQUENUMBER(20)", "PROJECT(20)", "PAYMENTPROJECT(20)", "CURRENCYRATE", "BANKCHARGE", "DOCAMT", "UNAPPLIEDAMT", "CANCELLED", "NONREFUNDABLE", "BOUNCEDATE", "DOCTYPE", "KODOCNO", "KOAMT");
+
+			$column = 1;
+
+			foreach($table_columns as $field)
+			{
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
+				$spreadsheet->getActiveSheet()->getStyleByColumnAndRow($column, 1)->getFont()->setBold(true);
+				$column++;
+			}
+            $row = 2;
+            // $all_data = array(1, 2, 3);
+            $count = 1;
+            $SEQ = 0;
+			foreach ($payments as $payment) {
+                $year = $payment->title;
+                if ($year != $this->check) {
+                    $SEQ++;
+                }
+                $this->check = $year;
+                
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $payment->receipt_no);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $payment->member->gvBrowseCode);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(3, $row, $payment->payment_date);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(4, $row, $payment->payment_date);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(5, $row, "Payment for A/c");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(6, $row, find_area_by_id($payment->member->area_id));
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(7, $row, "----");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(8, $row, "500-000");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(9, $row, "");
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(10, $row, "---");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(11, $row, "---");
+                $spreadsheet->getActiveSheet()->getCell("L$row")->setValueExplicit('1.00', \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING2);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(13, $row, "0");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $payment->amount);
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(15, $row, "0");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(16, $row, "F");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(17, $row, "0");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(18, $row, "");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(19, $row, "IV");
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(20, $row, $payment->receipt_no);
+				$spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(21, $row, $payment->amount);
+                for ($i = 'A'; $i !=  $spreadsheet->getActiveSheet()->getHighestColumn(); $i++) {
+                    $spreadsheet->getActiveSheet()->getColumnDimension($i)->setAutoSize(TRUE);
+                }
+
+				$row++;
+                $count++;
+			}
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Payments' . time() . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $xlsxWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $xlsxWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        exit($xlsxWriter->save('php://output'));
+
+    }
+
+    
 }

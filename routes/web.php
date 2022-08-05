@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('members', membersController::class);
     Route::resource("payments", paymentController::class);
     Route::get('/export', [paymentController::class, 'export'])->name('payments.export');
+    Route::get('/export_customer_payment', [paymentController::class, 'export_customer_payment'])->name('payments.export_customer_payment');
     Route::get('/export_page', [paymentController::class, 'export_page'])->name('payments.export_page');
+    Route::get('/export_customer_payment_page', [paymentController::class, 'export_customer_payment_page'])->name('payments.export_customer_payment_page');
     Route::group(['prefix' => 'payments'], function () {
         Route::get("member_payments/{id}", [paymentController::class, 'member_payments'])->name('payments.member_payments');
     });

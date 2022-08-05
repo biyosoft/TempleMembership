@@ -10,11 +10,11 @@
     <div class="col-12 col-sm-12 mb-12">
         <div class="card border-0 shadow">
             <div class="card-header">
-                <h4 class="h5">Export Invoice Report</h4>
+                <h4 class="h5">Export Customer Payment Report</h4>
             </div>
             <div class="card-body">
                 <div style="margin-top: 20px; margin-bottom: 50px; margin-left: 10px;">
-                    <form action="{{route('payments.export')}}" method="GET">
+                    <form action="{{route('payments.export_customer_payment')}}" method="GET">
                         <div class="row">
                             <div class="col-sm-3">
                                 <b><strong class="h6" style="margin-left: 5px;"> From </strong></b><br>
