@@ -320,7 +320,7 @@ class paymentController extends Controller
 			}
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Payments' . time() . '.xlsx"');
+        header('Content-Disposition: attachment;filename="Invoice-Report' . time() . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $xlsxWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
@@ -407,7 +407,7 @@ class paymentController extends Controller
 			}
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Payments' . time() . '.xlsx"');
+        header('Content-Disposition: attachment;filename="Customer-Payments' . time() . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $xlsxWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
