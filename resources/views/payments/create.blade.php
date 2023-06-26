@@ -13,7 +13,7 @@
                             <select class="form-control select2" name="member_id" id="customer-select" required>
                                 <option value=""></option>
                                 @foreach($memberships as $member)
-                                <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} ({{$member->gvBrowseUDF_NOAHLISKMC}}) - ({{ $member->item->year ?? "" }})</option>
+                                <option {{$member_id == $member->id ? "selected" : ""}} value="{{$member->id}}">{{$member->gvBrowseCompanyName}} - ({{$member->no_ahli ? $member->no_ahli : 'null'}}) - ({{ $member->item->year ?? "" }})</option>
                                 @endforeach
                             </select>
                         </div>

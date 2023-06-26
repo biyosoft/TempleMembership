@@ -22,8 +22,14 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
+                            <label for="">{{ __('labels.no_ahli') }}</label>
+                            <input type="text" class="form-control " name="no_ahli"  value="{{ $members->no_ahli }}" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
                             <label for="">{{ __('labels.member_skmc_no') }} <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_NOAHLISKMC}}" name="gvBrowseUDF_NOAHLISKMC" readonly>
+                            <input type="text" class="form-control" value="{{$members->gvBrowseUDF_NOAHLISKMC}}" name="gvBrowseUDF_NOAHLISKMC" >
                         </div>
                     </div>
                     <div class="col-md-4">

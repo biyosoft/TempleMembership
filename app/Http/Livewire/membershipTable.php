@@ -125,6 +125,7 @@ final class membershipTable extends PowerGridComponent
             })
             ->addColumn('gvBrowseUDF_DOB')
             ->addColumn('gvBrowseUDF_NOAHLISKMC')
+            ->addColumn('no_ahli')
             ->addColumn('gvBrowseUDF_TARIKHMEMOHON')
             ->addColumn('gvBrowseUDF_PEKERJAAN')
             ->addColumn('gvBrowseUDF_JANTINA')
@@ -167,6 +168,12 @@ final class membershipTable extends PowerGridComponent
             Column::add()
                 ->title(__('labels.member_skmc_no'))
                 ->field('gvBrowseUDF_NOAHLISKMC')
+                ->sortable()
+                ->searchable()
+                ->makeInputText(),
+            Column::add()
+                ->title(__('labels.no_ahli'))
+                ->field('no_ahli')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),

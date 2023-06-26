@@ -60,10 +60,10 @@
                                       <td>{{$payment->member->area->area_name ? $payment->member->area->area_name : "N/A"}}</td>
                                     </tr>
                                     <tr>
-                                      <td>会员编号</br>No. Ahli</td>
+                                      <td>会员编号</br>NAMA AHLI</td>
                                       <td>
                                       @foreach($payments as $payment)
-                                        {{$payment->member->gvBrowseUDF_NOAHLISKMC}}
+                                        {{$payment->member->gvBrowseCompanyName}} ({{ $payment->member->no_ahli ?? ''  }})
                                         @if( !$loop->last)
                                         ,
                                     @endif

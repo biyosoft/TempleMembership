@@ -53,6 +53,7 @@ class membersController extends Controller
         $members->gvBrowseAddress1 = $request->input('gvBrowseAddress1');
         $members->area_id = $request->input('area_id');
         $members->gvBrowseUDF_DOB = $request->input('gvBrowseUDF_DOB');
+        $members->no_ahli = $request->input('no_ahli');
         $members->gvBrowseUDF_NOAHLISKMC = $request->input('gvBrowseUDF_NOAHLISKMC');
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
@@ -107,6 +108,8 @@ class membersController extends Controller
         $members->gvBrowseAddress1 = $request->input('gvBrowseAddress1');
         $members->area_id = $request->input('area_id');
         $members->gvBrowseUDF_DOB = $request->input('gvBrowseUDF_DOB');
+        $members->no_ahli = $request->input('no_ahli');
+        $members->gvBrowseUDF_NOAHLISKMC = $request->input('gvBrowseUDF_NOAHLISKMC');
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');

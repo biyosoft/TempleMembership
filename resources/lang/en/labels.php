@@ -48,4 +48,5 @@ return [
     'receipt_no' => 'RECEIPT NO',
     'add_area' => 'Add  Area',
     'save_new_area' => 'Save Area',
+    'no_ahli'=>'NO AHLI',
 ];
