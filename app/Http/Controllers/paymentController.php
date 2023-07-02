@@ -41,7 +41,7 @@ class paymentController extends Controller
         
         // $items = item::where('year','2023')->get();
         $items = item::orderBy("year")->get();
-        $memberships = membership::orderBy('gvBrowseCompanyName')->get();
+        $memberships = membership::orderBy('gvBrowseCompanyName')->where('status','Active')->get();
         $households = DB::table("memberships")
             ->select(DB::raw("min(id) id, gvBrowseAttention household"))
             ->where("deleted_at", "=", null)

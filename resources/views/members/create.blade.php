@@ -4,7 +4,7 @@
     <div class="col-md-10">
         <div class="card card-body">
             <h2 class="h3 mb-4">{{ __('labels.add_member') }}</h2>
-            <form action="{{route('members.store')}}" method="POST">
+            <form action="{{route('members.store')}}" id="memberForm" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-4">
@@ -97,12 +97,17 @@
                     <div class="col-md-4">
                         <div class="form-group mb-3">
                             <label for="">Status</label>
-                            <select class="form-control  " name="status"  >
+                            <select class="form-control" id="item_id"  name="status"  >
                                 <option class="text-center" value=""> --- Select --- </option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
+                                <option value="Deceased">Deceased</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-md-4" id="dateField" style="display: none;">
+                        <label for="">{{ __('labels.deceasedDate') }}</label>
+                        <input type="date" class="form-control" name="deceased_date" id="deceased_date">
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">
@@ -134,6 +139,35 @@
             width: "100%"
         });
 
+    });
+</script>
+
+<script>
+    var selectElement = document.getElementById("item_id");
+    selectElement.addEventListener("change", function() {
+        var selectedValue = this.value;
+        var dateElement = document.getElementById("deceased_date");
+        if (selectedValue === "Deceased") {
+            dateField.style.display = "block";
+        } else {
+            dateElement.value = "";
+            dateField.style.display = "none";
+        }
+
+        
+    });
+
+    var formElement = document.getElementById("memberForm"); // Replace "yourForm" with the actual form ID
+    formElement.addEventListener("submit", function(event) {
+        var selectedValue = selectElement.value;
+        
+        if (selectedValue === "Deceased") {
+            var dateElement = document.getElementById("deceased_date");
+            if (dateElement.value === "") {
+                event.preventDefault(); // Prevent form submission if deceased date is not provided
+                alert("Please enter the deceased date.");
+            }
+        }
     });
 </script>
 @endsection

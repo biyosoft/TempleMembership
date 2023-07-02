@@ -54,6 +54,7 @@ class membersController extends Controller
         $members->area_id = $request->input('area_id');
         $members->gvBrowseUDF_DOB = $request->input('gvBrowseUDF_DOB');
         $members->no_ahli = $request->input('no_ahli');
+        $members->deceased_date = $request->input('deceased_date');
         $members->gvBrowseUDF_NOAHLISKMC = $request->input('gvBrowseUDF_NOAHLISKMC');
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
@@ -113,6 +114,7 @@ class membersController extends Controller
         $members->gvBrowseUDF_TARIKHMEMOHON = $request->input('gvBrowseUDF_TARIKHMEMOHON');
         $members->gvBrowseUDF_PEKERJAAN = $request->input('gvBrowseUDF_PEKERJAAN');
         $members->gvBrowseUDF_JANTINA = $request->input('gvBrowseUDF_JANTINA');
+        $members->deceased_date = $request->input('deceased_date');
         $members->status = $request->input('status');
         $members->item_id = $request->input('item_id');
         $members->save();
