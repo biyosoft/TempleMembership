@@ -130,7 +130,7 @@
                 if (siblings.length > 0) {
                     let html = ``;
                     $.each(siblings, function(index, sibling) {
-                        html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} (${sibling.gvBrowseUDF_NOAHLISKMC}) - (${sibling.item?.year ? sibling.item.year : ""})</option>`;
+                            html += `<option value="${sibling.id}">${sibling.gvBrowseCompanyName} (${sibling.gvBrowseUDF_NOAHLISKMC}) - (${sibling.item?.year ? sibling.item.year : ""})</option>`;
                     });
                     $('#family-select').html(html);
                     $("#family-select").prop("required", true);

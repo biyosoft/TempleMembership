@@ -14,7 +14,7 @@ class AddDeceasedDateAtMembershipsTable extends Migration
     public function up()
     {
         Schema::table('memberships', function (Blueprint $table) {
-            $table->date('deceased_date')->nullable();
+            $table->string('deceased_date')->nullable();
         });
     }
 

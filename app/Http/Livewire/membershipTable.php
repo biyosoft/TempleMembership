@@ -34,6 +34,7 @@ final class membershipTable extends PowerGridComponent
         $this->showCheckBox()
             ->showPerPage()
             ->showSearchInput()
+            ->persist(['columns', 'filters'])
             ->showExportOption('download', ['excel', 'csv']);
     }
 
@@ -131,7 +132,7 @@ final class membershipTable extends PowerGridComponent
             ->addColumn('gvBrowseUDF_JANTINA')
             ->addColumn('status')
             ->addColumn('deceased_date', function (membership $model) {
-               return $model->deceased_date ? Carbon::parse($model->deceased_date)->format('d/m/Y H:i:s') : '';
+               return $model->deceased_date ?? '';
             })
             ->addColumn('item_id', function (membership $model) {
                 return (!empty($model->item) ? $model->item->title   : 'Null');
@@ -276,8 +277,8 @@ final class membershipTable extends PowerGridComponent
             ->title('Date of deceased')
             ->field('deceased_date')
             ->sortable()
-            ->searchable()
-            ->makeInputDatePicker(),
+            ->makeInputText()
+            ->searchable(),
 
             Column::add()
                 ->title(__('labels.last_payment_year'))

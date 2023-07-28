@@ -107,7 +107,7 @@
                     </div>
                     <div class="col-md-4" id="dateField" style="display: none;">
                         <label for="">{{ __('labels.deceasedDate') }}</label>
-                        <input type="date" class="form-control" name="deceased_date" id="deceased_date">
+                        <input type="text" class="form-control" name="deceased_date" id="deceased_date">
                     </div>
                     <div class="col-md-4">
                         <div class="form-group mb-3">

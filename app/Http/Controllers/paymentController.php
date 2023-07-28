@@ -45,6 +45,7 @@ class paymentController extends Controller
         $households = DB::table("memberships")
             ->select(DB::raw("min(id) id, gvBrowseAttention household"))
             ->where("deleted_at", "=", null)
+            ->where('status' ,'!=' , 'Inactive')
             ->groupBy("gvBrowseAttention")
             ->orderBy("gvBrowseAttention")
             ->get();
